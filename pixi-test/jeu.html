@@ -78,30 +78,37 @@
             wallSprite.width = 50;
             wallSprite.height = 50;
             wallSprite.x = 600;
+            wallSprite.y = 150;
             app.stage.addChild(wallSprite);
             wallSprites.push(wallSprite);
           }
 
+          
+
           wallSprites.forEach(wall => {
-            if (sprite.x < wall.x + wall.width 
+            if (sprite.x  < wall.x + wall.width 
             && sprite.x + sprite.width > wall.x
             && sprite.y < wall.y + wall.height
             && sprite.y + sprite.height > wall.y){
-            if (sprite.x < wall.x + wall.width) {
+            if (sprite.x  < wall.x + wall.width) {
+              isTouchedByWallByLeft = true;
+              
+            }
+
+            if (sprite.x + sprite.width > wall.x -10 && sprite.x + sprite.width < wall.x + wall.width -wall.width /2) {
               isTouchedByWallByRight = true;
               sprite.x -=2;
             }
 
-            if (sprite.x + sprite.width > wall.x) {
-              isTouchedByWallByLeft = true;
-            }
-            if (sprite.y < wall.y + wall.height) {
-              isTouchedByWallByTop = true;
-            }
-            if (sprite.y + sprite.height > wall.y){
+            if (sprite.y + sprite.height > wall.y -10 && sprite.y + sprite.height < wall.y + wall.height -wall.height /2) {
               isTouchedByWallByBottom = true;
             }
-              
+
+            if (sprite.y - sprite.height < wall.y +10 && sprite.y - sprite.height > wall.y - wall.height +wall.height /2) {
+              isTouchedByWallByTop = true;
+            }
+
+            console.log(isTouchedByWallByRight);
           }
 
           wall.x -=2;
