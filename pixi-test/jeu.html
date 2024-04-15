@@ -1,45 +1,43 @@
 <!doctype html>
 <html>
+  <head>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+  </head>
+  <body>
+    <button id="fullscreen-btn">Fullscreen</button>
+    <script type="module">
 
-<head>
-  <script src="https://pixijs.download/release/pixi.js"></script>
-</head>
-
-<body>
-  <button id="fullscreen-btn">Fullscreen</button>
-  <script type="module">
-
-    function keyDown(e) {
-      console.log(e.keyCode);
-      keys[e.keyCode] = true;
-    }
-
-    function keyUp(e) {
-      console.log(e.keyCode);
-      keys[e.keyCode] = false;
-    }
-
-    function movementControll(isTouchedByWallByRight, isTouchedByWallByLeft, isTouchedByWallByTop, isTouchedByWallByBottom) {
-      if (!isTouchedByWallByTop) {
-        if (keys["38"]) {
-          sprite.y -= 3;
-        }
+      function keyDown(e) {
+          console.log(e.keyCode);
+          keys[e.keyCode] = true;
       }
-      if (!isTouchedByWallByBottom) {
-        if (keys["40"]) {
-          sprite.y += 3;
-        }
+
+      function keyUp(e) {
+          console.log(e.keyCode);
+          keys[e.keyCode] = false;
       }
-      if (!isTouchedByWallByLeft) {
-        if (keys["37"]) {
-          sprite.x -= 3;
+
+      function movementControll(isTouchedByWallByRight, isTouchedByWallByLeft, isTouchedByWallByTop, isTouchedByWallByBottom) {
+        if(!isTouchedByWallByTop) {
+          if(keys["38"]){
+              sprite.y -= 3;
+            }
         }
-      }
-      if (!isTouchedByWallByRight) {
-        if (keys["39"]) {
+        if(!isTouchedByWallByBottom) {
+          if(keys["40"]){
+            sprite.y += 3;
+          }
+        }
+        if (!isTouchedByWallByLeft) {
+          if(keys["37"]){
+            sprite.x -= 3;
+          }
+        }
+        if (!isTouchedByWallByRight) {
+          if(keys["39"]){
           sprite.x += 3;
+          }
         }
-      }
 
       }
         const app = new PIXI.Application();
@@ -51,38 +49,28 @@
         await app.init({ background: 'black', width: 640, height: 500 });
       
         document.body.appendChild(app.canvas);
-    }
-    const app = new PIXI.Application();
-    let keys = {};
-    let keysDiv;
-    let wallSprites = [];
-    let timeStart = new Date;
-    let startedSpawning = false
-    await app.init({ background: 'black', width: 640, height: 360 });
 
-    document.body.appendChild(app.canvas);
+        // Create the sprite and add it to the stage
+        await PIXI.Assets.load('square.png');
+        let sprite = PIXI.Sprite.from('square.png');
+        sprite.width = 50;
+        sprite.height = 50;
+        app.stage.addChild(sprite);
+        
+        window.addEventListener("keydown", keyDown);
+        window.addEventListener("keyup", keyUp);
+        keysDiv = document.querySelector("#keys");
+        // Add a ticker callback to move the sprite back and forth
+        let elapsed = 0.0;
+        app.ticker.add((ticker) => {
+          let nowTime = new Date;
+          let isTouchedByWallByTop = false;
+          let isTouchedByWallByLeft = false;
+          let isTouchedByWallByBottom = false;
+          let isTouchedByWallByRight = false;
 
-    // Create the sprite and add it to the stage
-    await PIXI.Assets.load('square.png');
-    let sprite = PIXI.Sprite.from('square.png');
-    sprite.width = 50;
-    sprite.height = 50;
-    app.stage.addChild(sprite);
-
-    window.addEventListener("keydown", keyDown);
-    window.addEventListener("keyup", keyUp);
-    keysDiv = document.querySelector("#keys");
-    // Add a ticker callback to move the sprite back and forth
-    let elapsed = 0.0;
-    app.ticker.add((ticker) => {
-      let nowTime = new Date;
-      let isTouchedByWallByTop = false;
-      let isTouchedByWallByLeft = false;
-      let isTouchedByWallByBottom = false;
-      let isTouchedByWallByRight = false;
-
-      //keysDiv.innerHTML = JSON.stringify(keys);
-      elapsed += ticker.deltaTime;
+          //keysDiv.innerHTML = JSON.stringify(keys);
+          elapsed += ticker.deltaTime;
 
           if (nowTime.getSeconds() - timeStart.getSeconds() >= 5 && !startedSpawning) {
             startedSpawning = true;
@@ -138,9 +126,14 @@
           
           });
 
-      movementControll(isTouchedByWallByRight, isTouchedByWallByLeft, isTouchedByWallByTop, isTouchedByWallByBottom);
-      // Fullscreen.js
-      function toggleFullScreen() {
+          movementControll(isTouchedByWallByRight, isTouchedByWallByLeft, isTouchedByWallByTop, isTouchedByWallByBottom);
+          //console.log(isTouchedByWallByRight);
+          
+          //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+          
+        });
+
+        function toggleFullScreen() {
         const elem = document.documentElement;
         if (!document.fullscreenElement) {
           if (elem.requestFullscreen) {
@@ -166,14 +159,6 @@
       }
 
       document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
-
-
-
-
-      //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
-
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
