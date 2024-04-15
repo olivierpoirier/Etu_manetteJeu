@@ -45,7 +45,7 @@
         let wallSprites = [];
         let timeStart = new Date;
         let startedSpawning = false
-        await app.init({ background: 'black', width: 640, height: 360 });
+        await app.init({ background: 'black', width: 640, height: 500 });
       
         document.body.appendChild(app.canvas);
 
@@ -80,7 +80,17 @@
             wallSprite.x = 600;
             wallSprite.y = 150;
             app.stage.addChild(wallSprite);
+
+            let wallSprite2 = PIXI.Sprite.from('square.png');
+            wallSprite2.width = 50;
+            wallSprite2.height = 50;
+            wallSprite2.x = 300;
+            wallSprite2.y = 100;
+            //Faire le random
+            //wallSprite.y = Math.random(0,150);
+            app.stage.addChild(wallSprite2);
             wallSprites.push(wallSprite);
+            wallSprites.push(wallSprite2);
           }
 
           
@@ -112,10 +122,11 @@
           }
 
           wall.x -=2;
+          
           });
 
           movementControll(isTouchedByWallByRight, isTouchedByWallByLeft, isTouchedByWallByTop, isTouchedByWallByBottom);
-            
+          //console.log(isTouchedByWallByRight);
           
           //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
           
