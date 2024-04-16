@@ -5,7 +5,6 @@
   </head>
   <body>
     <script type="module">
-
       function keyDown(e) {
           console.log(e.keyCode);
           keys[e.keyCode] = true;
@@ -64,16 +63,20 @@
         let timeStart = new Date;
         let startedSpawning = false;
         let isWallSpawning = false;
+        let timeUntilWallSpawn = 200;
 
         const gameWidth = 1000;
         const gameHeight = 500;
-        const speedOfWalls = 2;
+        let speedOfWalls = 5;
         const speedOfPlayer = 3;
         const playerWidth = 15;
         const playerHeight = 15;
+        let comptorHowManyWallsDied = 0;
+        let playerScore = 0;
 
         await app.init({ background: 'black', width: gameWidth, height: gameHeight });
       
+    
         document.body.appendChild(app.canvas);
 
         // Create the sprite and add it to the stage
@@ -99,8 +102,15 @@
           elapsed += ticker.deltaTime;
 
           if (!isWallSpawning) {
-            setTimeout(spawnWall, 500);
+            setTimeout(spawnWall, timeUntilWallSpawn);
+            //timeUntilWallSpawn -= 25;
             isWallSpawning = true;
+          }
+
+          if(comptorHowManyWallsDied >= 100) {
+            timeUntilWallSpawn -= 25;
+            speedOfWalls += 2;
+            comptorHowManyWallsDied = 0;
           }
 
 
@@ -138,7 +148,8 @@
           if(wall.x + wall.width < 0) {
             app.stage.removeChild(wall);
             wallSprites.shift(wall);
-            console.log(wallSprites.length);
+            //console.log(wallSprites.length);
+            comptorHowManyWallsDied += 1;
           }
           
           });
