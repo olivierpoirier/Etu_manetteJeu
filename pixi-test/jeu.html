@@ -1,12 +1,11 @@
 <!doctype html>
 <html>
   <head>
-    <script src="https://pixijs.download/release/pixi.js"></script>
+    <script src="pixi.min.js"></script>
   </head>
   <body>
     <button id="fullscreen-btn">Fullscreen</button>
     <script type="module">
-
       function keyDown(e) {
           console.log(e.keyCode);
           keys[e.keyCode] = true;
@@ -17,25 +16,43 @@
           keys[e.keyCode] = false;
       }
 
+      function spawnWall() {
+        console.log("spawn");
+        let wallSprite = PIXI.Sprite.from('Images/square.png');
+        wallSprite.width = 50;
+        wallSprite.height = 50;
+        wallSprite.x = gameWidth;
+        wallSprite.y = Math.floor(Math.random() * (gameHeight-wallSprite.height));
+        app.stage.addChild(wallSprite);
+        wallSprites.push(wallSprite);
+        isWallSpawning = false;
+        
+          
+      }
+
       function movementControll(isTouchedByWallByRight, isTouchedByWallByLeft, isTouchedByWallByTop, isTouchedByWallByBottom) {
-        if(!isTouchedByWallByTop) {
-          if(keys["38"]){
-              sprite.y -= 3;
+        if(sprite.y >= 0){
+          if(!isTouchedByWallByTop) {
+            if(keys["38"]){
+              sprite.y -= speedOfPlayer;
             }
+          }
         }
-        if(!isTouchedByWallByBottom) {
-          if(keys["40"]){
-            sprite.y += 3;
+        if(sprite.y < gameHeight - sprite.height){
+          if(!isTouchedByWallByBottom) {
+            if(keys["40"]){
+              sprite.y += speedOfPlayer;
+            }
           }
         }
         if (!isTouchedByWallByLeft) {
           if(keys["37"]){
-            sprite.x -= 3;
+            sprite.x -= speedOfPlayer;
           }
         }
         if (!isTouchedByWallByRight) {
           if(keys["39"]){
-          sprite.x += 3;
+          sprite.x += speedOfPlayer;
           }
         }
 
@@ -45,16 +62,29 @@
         let keysDiv;
         let wallSprites = [];
         let timeStart = new Date;
-        let startedSpawning = false
-        await app.init({ background: 'black', width: 640, height: 500 });
+        let startedSpawning = false;
+        let isWallSpawning = false;
+        let timeUntilWallSpawn = 200;
+
+        const gameWidth = 1000;
+        const gameHeight = 500;
+        let speedOfWalls = 5;
+        const speedOfPlayer = 3;
+        const playerWidth = 15;
+        const playerHeight = 15;
+        let comptorHowManyWallsDied = 0;
+        let playerScore = 0;
+
+        await app.init({ background: 'black', width: gameWidth, height: gameHeight });
       
+    
         document.body.appendChild(app.canvas);
 
         // Create the sprite and add it to the stage
-        await PIXI.Assets.load('square.png');
-        let sprite = PIXI.Sprite.from('square.png');
-        sprite.width = 50;
-        sprite.height = 50;
+        await PIXI.Assets.load('Images/square.png');
+        let sprite = PIXI.Sprite.from('Images/square.png');
+        sprite.width = playerWidth;
+        sprite.height = playerHeight;
         app.stage.addChild(sprite);
         
         window.addEventListener("keydown", keyDown);
@@ -72,57 +102,56 @@
           //keysDiv.innerHTML = JSON.stringify(keys);
           elapsed += ticker.deltaTime;
 
-          if (nowTime.getSeconds() - timeStart.getSeconds() >= 5 && !startedSpawning) {
-            startedSpawning = true;
-            console.log("spawn");
-            let wallSprite = PIXI.Sprite.from('square.png');
-            wallSprite.width = 50;
-            wallSprite.height = 50;
-            wallSprite.x = 600;
-            wallSprite.y = 150;
-            app.stage.addChild(wallSprite);
-
-            let wallSprite2 = PIXI.Sprite.from('square.png');
-            wallSprite2.width = 50;
-            wallSprite2.height = 50;
-            wallSprite2.x = 300;
-            wallSprite2.y = 100;
-            //Faire le random
-            //wallSprite.y = Math.random(0,150);
-            app.stage.addChild(wallSprite2);
-            wallSprites.push(wallSprite);
-            wallSprites.push(wallSprite2);
+          if (!isWallSpawning) {
+            setTimeout(spawnWall, timeUntilWallSpawn);
+            //timeUntilWallSpawn -= 25;
+            isWallSpawning = true;
           }
+
+          if(comptorHowManyWallsDied >= 100) {
+            timeUntilWallSpawn -= 15;
+            speedOfWalls += 1;
+            comptorHowManyWallsDied = 0;
+          }
+
+
 
           
 
           wallSprites.forEach(wall => {
-            if (sprite.x  < wall.x + wall.width 
-            && sprite.x + sprite.width > wall.x
-            && sprite.y < wall.y + wall.height
-            && sprite.y + sprite.height > wall.y){
-            if (sprite.x  < wall.x + wall.width) {
-              isTouchedByWallByLeft = true;
-              
-            }
 
-            if (sprite.x + sprite.width > wall.x -10 && sprite.x + sprite.width < wall.x + wall.width -wall.width /2) {
-              isTouchedByWallByRight = true;
-              sprite.x -=2;
-            }
 
-            if (sprite.y + sprite.height > wall.y -10 && sprite.y + sprite.height < wall.y + wall.height -wall.height /2) {
+
+            if (sprite.y + sprite.height > wall.y - speedOfPlayer && sprite.y <= wall.y  && sprite.x >= wall.x && sprite.x <= wall.x + wall.width) {
               isTouchedByWallByBottom = true;
             }
 
-            if (sprite.y - sprite.height < wall.y +10 && sprite.y - sprite.height > wall.y - wall.height +wall.height /2) {
+            if (sprite.y < wall.y + wall.height + speedOfPlayer && sprite.y >= wall.y + wall.height && sprite.x >= wall.x && sprite.x <= wall.x + wall.width) {
               isTouchedByWallByTop = true;
             }
 
-            console.log(isTouchedByWallByRight);
-          }
 
-          wall.x -=2;
+            if (sprite.x + sprite.width > wall.x - speedOfPlayer && sprite.x <= wall.x  && sprite.y >= wall.y && sprite.y <= wall.y + wall.height) {
+              isTouchedByWallByRight = true;
+              sprite.x -= speedOfWalls;
+            }
+            
+            if (sprite.x < wall.x + wall.width + speedOfPlayer && sprite.x >= wall.x + wall.width && sprite.y >= wall.y && sprite.y <= wall.y + wall.height) {
+              isTouchedByWallByLeft = true;
+            }
+
+
+            console.log(isTouchedByWallByTop);
+          
+
+          wall.x -=speedOfWalls;
+
+          if(wall.x + wall.width < 0) {
+            app.stage.removeChild(wall);
+            wallSprites.shift(wall);
+            //console.log(wallSprites.length);
+            comptorHowManyWallsDied += 1;
+          }
           
           });
 
