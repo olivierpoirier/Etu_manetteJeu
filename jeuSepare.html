@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="pixi.min.js"></script>
+    <script src="./constants.js" type="module/javascript"></script>  
+  </head>
+  <body>      
+    
+    <script type="module">
+
+      import { app, gameWidth, gameHeight, speedOfPlayer, playerWidth, playerHeight, scoretext}  from "./constants.js";
+      import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls, removeWallFromGame } from "./wallsManagement.js";
+      import { movementControl }  from "./controls.js";
+      
+
+      let playerScore = 0;
+
+
+      
+      scoretext.position.x = gameWidth*0.70;
+      scoretext.position.y = gameHeight*0.05;
+      await app.init({ background: 'black', width: gameWidth, height: gameHeight });
+    
+      
+
+      // Create the sprite and add it to the stage
+      await PIXI.Assets.load('Images/square.png');
+      let sprite = PIXI.Sprite.from('Images/square.png');
+      sprite.width = playerWidth;
+      sprite.height = playerHeight;
+      app.stage.addChild(sprite);
+
+      
+      app.stage.addChild(scoretext);
+      document.body.appendChild(app.canvas);
+      // Add a ticker callback to move the sprite back and forth
+      let elapsed = 0.0;
+      app.ticker.add((ticker) => {
+        scoretext.text = `Score : ${playerScore}`
+        let isTouchedByWallByTop = false
+        let isTouchedByWallByLeft = false
+        let isTouchedByWallByBottom = false 
+        let isTouchedByWallByRight = false
+        let isTouchedResponse = []
+        elapsed += ticker.deltaTime;
+
+        timerBeforeSpawningWall();
+        increaseDifficultyOfWalls();
+        isTouchedResponse = wallsManagement(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, sprite, playerScore);
+        movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], sprite);
+        playerScore = isTouchedResponse[4];
+        
+      });
+    </script>
+    <script src="./wallsManagement.js" type="module/javascript"></script>
+    <script src="./controls.js" type="module/javascript"></script>
+    <script src="./wallsManagement.js" type="module/javascript"></script>
+        
+  </body>
+</html>

@@ -74,6 +74,27 @@
         let comptorHowManyWallsDied = 0;
         let playerScore = 0;
 
+        // load the fonts
+        //await PIXI.Assets.load('short-stack.woff2');
+
+        // now they can be used!
+
+
+        const style = new PIXI.TextStyle({
+          fontFamily: ['Helvetica', 'Arial', 'sans-serif'],
+          fontSize: 36,
+        });
+        const text = new PIXI.Text({
+          text:'hello',
+          style: {
+            fontFamily: ['Helvetica', 'Arial', 'sans-serif'],
+            fontSize: 36,
+          }
+
+        })
+
+        text.position.x = 200;
+        text.position.y = 200;
         await app.init({ background: 'black', width: gameWidth, height: gameHeight });
       
     
@@ -85,6 +106,7 @@
         sprite.width = playerWidth;
         sprite.height = playerHeight;
         app.stage.addChild(sprite);
+        app.stage.addChild(text);
         
         window.addEventListener("keydown", keyDown);
         window.addEventListener("keyup", keyUp);
@@ -155,10 +177,7 @@
           });
 
           movementControll(isTouchedByWallByRight, isTouchedByWallByLeft, isTouchedByWallByTop, isTouchedByWallByBottom);
-          //console.log(isTouchedByWallByRight);
-          
-          //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
-          
+
         });
     </script>
   </body>
