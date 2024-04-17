@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <script src="https://pixijs.download/release/pixi.js"></script>
+    <script src="pixi.min.js"></script>
   </head>
   <body>
     <script type="module">
@@ -17,7 +17,7 @@
 
       function spawnWall() {
         console.log("spawn");
-        let wallSprite = PIXI.Sprite.from('square.png');
+        let wallSprite = PIXI.Sprite.from('Images/square.png');
         wallSprite.width = 50;
         wallSprite.height = 50;
         wallSprite.x = gameWidth;
@@ -80,8 +80,8 @@
         document.body.appendChild(app.canvas);
 
         // Create the sprite and add it to the stage
-        await PIXI.Assets.load('square.png');
-        let sprite = PIXI.Sprite.from('square.png');
+        await PIXI.Assets.load('Images/square.png');
+        let sprite = PIXI.Sprite.from('Images/square.png');
         sprite.width = playerWidth;
         sprite.height = playerHeight;
         app.stage.addChild(sprite);
@@ -108,8 +108,8 @@
           }
 
           if(comptorHowManyWallsDied >= 100) {
-            timeUntilWallSpawn -= 25;
-            speedOfWalls += 2;
+            timeUntilWallSpawn -= 15;
+            speedOfWalls += 1;
             comptorHowManyWallsDied = 0;
           }
 
