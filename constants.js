@@ -1,3 +1,5 @@
+import {height, width} from "./FullScreen"
+
 
 export const app = new PIXI.Application();
 export const gameWidth = 1000;

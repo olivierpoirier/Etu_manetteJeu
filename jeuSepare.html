@@ -3,14 +3,19 @@
   <head>
     <script src="pixi.min.js"></script>
     <script src="./constants.js" type="module/javascript"></script>  
+    <script src="./FullScreen.js" type="module/javascript" ></script>    
+    <script src="./wallsManagement.js" type="module/javascript"></script>
+    <script src="./controls.js" type="module/javascript"></script>
   </head>
   <body>      
-    
+    <button id="fullscreen-btn" class="btn btn-danger">Fullscreen</button>
     <script type="module">
+      
 
       import { app, gameWidth, gameHeight, speedOfPlayer, playerWidth, playerHeight, scoretext}  from "./constants.js";
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls, removeWallFromGame } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
+      import {toggleFullScreen,resize} from "./FullScreen.js"
       
       let playerScore = 0;
 
@@ -39,6 +44,8 @@
       scoretext.position.x = gameWidth*0.70;
       scoretext.position.y = gameHeight*0.05;
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
+
+      
     
       // Create the sprite and add it to the stage
       await PIXI.Assets.load('Images/square.png');
@@ -53,6 +60,7 @@
       app.stage.addChild(lineRightMenu);
       app.stage.addChild(lineBottomMenu);
       document.body.appendChild(app.canvas);
+      
       // Add a ticker callback to move the sprite back and forth
       let elapsed = 0.0;
       app.ticker.add((ticker) => {
@@ -70,11 +78,18 @@
         movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], sprite);
         playerScore = isTouchedResponse[4];
         
-      });
-    </script>
-    <script src="./wallsManagement.js" type="module/javascript"></script>
-    <script src="./controls.js" type="module/javascript"></script>
-    <script src="./wallsManagement.js" type="module/javascript"></script>
         
+      });
+
+      
+      document.getElementById('fullscreen-btn').addEventListener('click', () => {
+        toggleFullScreen();
+        resize(app);
+      });
+      window.addEventListener('resize', () => resize(app));
+
+  
+    </script>
+
   </body>
 </html>
