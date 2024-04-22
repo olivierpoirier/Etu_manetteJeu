@@ -12,17 +12,34 @@
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls, removeWallFromGame } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
       
-
       let playerScore = 0;
 
+      let backgroundMenu = new PIXI.Graphics()
+        .rect(gameWidth*0.20, gameHeight*0.20, gameWidth*0.60, gameHeight*0.60)
+        .fill(0xff0000);
 
-      
+      let lineTopMenu = new PIXI.Graphics()
+        .rect(gameWidth*0.20, gameHeight*0.20, gameWidth*0.60, gameHeight*0.01)
+        .fill(0xffffff);
+
+      let lineBottomMenu = new PIXI.Graphics()
+        .rect(gameWidth*0.20, gameHeight*0.20, gameWidth*0.01, gameHeight*0.60)
+        .fill(0xffffff);
+
+      let lineRightMenu = new PIXI.Graphics()
+        .rect(gameWidth*0.80, gameHeight*0.20, gameWidth*0.01, gameHeight*0.60)
+        .fill(0xffffff);
+
+      let lineLeftMenu = new PIXI.Graphics()
+        .rect(gameWidth*0.20, gameHeight*0.20, gameWidth*0.60, gameHeight*0.01)
+        .fill(0xffffff);
+
+
+      backgroundMenu.alpha = 0.3
       scoretext.position.x = gameWidth*0.70;
       scoretext.position.y = gameHeight*0.05;
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
     
-      
-
       // Create the sprite and add it to the stage
       await PIXI.Assets.load('Images/square.png');
       let sprite = PIXI.Sprite.from('Images/square.png');
@@ -30,8 +47,11 @@
       sprite.height = playerHeight;
       app.stage.addChild(sprite);
 
-      
       app.stage.addChild(scoretext);
+      app.stage.addChild(backgroundMenu);
+      app.stage.addChild(lineLeftMenu);
+      app.stage.addChild(lineRightMenu);
+      app.stage.addChild(lineBottomMenu);
       document.body.appendChild(app.canvas);
       // Add a ticker callback to move the sprite back and forth
       let elapsed = 0.0;
