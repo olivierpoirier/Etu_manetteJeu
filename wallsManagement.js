@@ -14,13 +14,14 @@ export function increaseDifficultyOfWalls() {
     }
 }
 
-function spawnWall() {
+function spawnWall(underLayer) {
     console.log("spawn");
     let wallSprite = PIXI.Sprite.from('Images/square.png');
     wallSprite.width = 50;
     wallSprite.height = 50;
     wallSprite.x = gameWidth;
     wallSprite.y = Math.floor(Math.random() * (gameHeight-wallSprite.height));
+    underLayer.addChild(wallSprite);
     app.stage.addChild(wallSprite);
     wallSprites.push(wallSprite);
     isWallSpawning = false;
@@ -29,9 +30,9 @@ function spawnWall() {
 }
 
 
-export function timerBeforeSpawningWall() {
+export function timerBeforeSpawningWall(underLayer) {
     if (!isWallSpawning) {
-        setTimeout(spawnWall, timeUntilWallSpawn);
+        setTimeout(spawnWall, timeUntilWallSpawn, underLayer);
         //timeUntilWallSpawn -= 25;
         isWallSpawning = true;
     }
