@@ -1,13 +1,15 @@
 import { app, gameWidth, gameHeight} from "./constants.js";
+import { middleLayer } from "./gameLayers.js";
 
 const menuLeftCoordinateX = gameWidth*0.20;
 const menuRightCoordinateX = gameWidth*0.80;
 const menuTopCoordinateY = gameHeight*0.20;
 const menuBottomCoordinateY = gameHeight*0.80;
 const menuMaxWidth = gameWidth*0.60;
-const menuMinWidth = gameWidth*0.01;
+const menuMinWidth = gameWidth*0.005;
 const menuMaxHeight = gameHeight*0.60;
-const menuMinHeight = gameHeight*0.01;
+const menuMinHeight = gameHeight*0.005;
+
 
 export const menuFirstLevelSquareLeftCoordinateX = gameWidth*0.30;
 export const menuFirstLevelSquareRightCoordinateX = gameWidth*0.40;
@@ -15,9 +17,9 @@ export const menuFirstLevelSquareTopCoordinateY = gameHeight*0.30;
 export const menuFirstLevelSquareBottomCoordinateY = gameHeight*0.50;
 
 export const levelMaxWidth = gameWidth*0.10;
-const levelMinWidth = gameWidth*0.01;
+const levelMinWidth = gameWidth*0.005;
 export const levelMaxHeight = gameWidth*0.10;
-const levelMinHeight = gameWidth*0.01;
+const levelMinHeight = gameWidth*0.005;
 
 export const textStyle = new PIXI.TextStyle({
     fontFamily: "Verdana",
@@ -31,12 +33,38 @@ export const scoretext = new PIXI.Text({
 
 });
 
+
+export const titleChooseLevel = new PIXI.Text({
+    text:"Go on one level icon to start",
+    style: textStyle
+
+});
+
+titleChooseLevel.position.x = gameWidth*0.50 - titleChooseLevel.width/2;
+titleChooseLevel.position.y = gameHeight*0.10 - titleChooseLevel.height/2;
+
+export const level1text = new PIXI.Text({
+    text:"level 1",
+    style: textStyle
+
+});
+export const level2text = new PIXI.Text({
+    text:"level 2",
+    style: textStyle
+
+});
+export const level3text = new PIXI.Text({
+    text:"level 3",
+    style: textStyle
+
+});
+
 scoretext.position.x = gameWidth*0.70;
 scoretext.position.y = gameHeight*0.05;
 
 export const menuBackground = new PIXI.Graphics()
     .rect(menuLeftCoordinateX, menuTopCoordinateY, menuMaxWidth, menuMaxHeight)
-    .fill(0xff0000);
+    .fill(0x808080);
 
 export const menuLineLeft = new PIXI.Graphics()
     .rect(menuLeftCoordinateX, menuTopCoordinateY, menuMinWidth, menuMaxHeight)
@@ -72,15 +100,24 @@ export const firstLevelSquareLineTop = new PIXI.Graphics()
     .rect(menuFirstLevelSquareLeftCoordinateX, menuFirstLevelSquareTopCoordinateY, levelMaxWidth, levelMinHeight)
     .fill(0xffffff);
 
+export const level1Icon = PIXI.Sprite.from('Images/level1Icon.png');
+level1Icon.x = menuFirstLevelSquareLeftCoordinateX + levelMinWidth/2;
+level1Icon.y = menuFirstLevelSquareTopCoordinateY + levelMinHeight/2;
+level1Icon.width = levelMaxWidth;
+level1Icon.height = levelMaxHeight - levelMinHeight;
 
+menuBackground.alpha = 0.4;
 scoretext.visible = false;
-app.stage.addChild(scoretext);
-app.stage.addChild(menuBackground);
-app.stage.addChild(menuLineLeft);
-app.stage.addChild(menuLineRight);
-app.stage.addChild(menuLineTop);
-app.stage.addChild(menuLineBottom);
-app.stage.addChild(firstLevelSquareLineLeft);
-app.stage.addChild(firstLevelSquareLineBottom);
-app.stage.addChild(firstLevelSquareLineRight);
-app.stage.addChild(firstLevelSquareLineTop);
+middleLayer.addChild(titleChooseLevel);
+middleLayer.addChild(scoretext);
+middleLayer.addChild(menuBackground);
+middleLayer.addChild(menuLineLeft);
+middleLayer.addChild(menuLineRight);
+middleLayer.addChild(menuLineTop);
+middleLayer.addChild(menuLineBottom);
+middleLayer.addChild(firstLevelSquareLineLeft);
+middleLayer.addChild(firstLevelSquareLineBottom);
+middleLayer.addChild(firstLevelSquareLineRight);
+middleLayer.addChild(firstLevelSquareLineTop);
+middleLayer.addChild(level1Icon);
+

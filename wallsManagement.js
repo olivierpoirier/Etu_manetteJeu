@@ -1,4 +1,6 @@
-import { app, gameWidth, gameHeight, speedOfPlayer } from "./constants.js";
+import { gameWidth, gameHeight, speedOfPlayer } from "./constants.js";
+import { player } from "./entities.js";
+import { underLayer } from "./gameLayers.js";
 
 let wallSprites = [];
 let speedOfWalls = 5;
@@ -14,7 +16,7 @@ export function increaseDifficultyOfWalls() {
     }
 }
 
-function spawnWall(underLayer) {
+function spawnWall() {
     console.log("spawn");
     let wallSprite = PIXI.Sprite.from('Images/square.png');
     wallSprite.width = 50;
@@ -22,7 +24,6 @@ function spawnWall(underLayer) {
     wallSprite.x = gameWidth;
     wallSprite.y = Math.floor(Math.random() * (gameHeight-wallSprite.height));
     underLayer.addChild(wallSprite);
-    app.stage.addChild(wallSprite);
     wallSprites.push(wallSprite);
     isWallSpawning = false;
     
@@ -30,55 +31,66 @@ function spawnWall(underLayer) {
 }
 
 
-export function timerBeforeSpawningWall(underLayer) {
+export function timerBeforeSpawningWall(isGameStarted) {
     if (!isWallSpawning) {
-        setTimeout(spawnWall, timeUntilWallSpawn, underLayer);
+        if(!isGameStarted) {
+        
+            timeUntilWallSpawn = Math.floor((Math.random()* 2000) + 600)
+            setTimeout(spawnWall, timeUntilWallSpawn);
+            
+            
+        } else {
+            setTimeout(spawnWall, timeUntilWallSpawn);
+        }
+        
         //timeUntilWallSpawn -= 25;
         isWallSpawning = true;
     }
 }
 
-export function removeWallFromGame(wall, playerScore) {
+export function removeWallFromGame(isGameStarted, wall, playerScore) {
     if(wall.x + wall.width < 0) {
-        app.stage.removeChild(wall);
+        underLayer.removeChild(wall);
         wallSprites.shift(wall);
         //console.log(wallSprites.length);
-        comptorHowManyWallsDied += 1;
-        playerScore += 10;
+        if(isGameStarted) {
+            comptorHowManyWallsDied += 1;
+            playerScore += 10;
+        }
+
     }
     return playerScore
 }
-export function wallsManagement(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, sprite, playerScore) {
+export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore) {
 
     wallSprites.forEach(wall => {
 
 
+    if(isGameStarted) {
+        if (player.y + player.height > wall.y - speedOfPlayer && player.y <= wall.y  && player.x >= wall.x && player.x <= wall.x + wall.width) {
+            isTouchedByWallByBottom = true;
+        }
 
-    if (sprite.y + sprite.height > wall.y - speedOfPlayer && sprite.y <= wall.y  && sprite.x >= wall.x && sprite.x <= wall.x + wall.width) {
-        isTouchedByWallByBottom = true;
+        if (player.y < wall.y + wall.height + speedOfPlayer && player.y >= wall.y + wall.height && player.x >= wall.x && player.x <= wall.x + wall.width) {
+            isTouchedByWallByTop = true;
+        }
+
+
+        if (player.x + player.width > wall.x - speedOfPlayer && player.x <= wall.x  && player.y >= wall.y && player.y <= wall.y + wall.height) {
+            isTouchedByWallByRight = true;
+            player.x -= speedOfWalls;
+        }
+        
+        if (player.x < wall.x + wall.width + speedOfPlayer && player.x >= wall.x + wall.width && player.y >= wall.y && player.y <= wall.y + wall.height) {
+            isTouchedByWallByLeft = true;
+        }
     }
 
-    if (sprite.y < wall.y + wall.height + speedOfPlayer && sprite.y >= wall.y + wall.height && sprite.x >= wall.x && sprite.x <= wall.x + wall.width) {
-        isTouchedByWallByTop = true;
-    }
-
-
-    if (sprite.x + sprite.width > wall.x - speedOfPlayer && sprite.x <= wall.x  && sprite.y >= wall.y && sprite.y <= wall.y + wall.height) {
-        isTouchedByWallByRight = true;
-        sprite.x -= speedOfWalls;
-    }
-    
-    if (sprite.x < wall.x + wall.width + speedOfPlayer && sprite.x >= wall.x + wall.width && sprite.y >= wall.y && sprite.y <= wall.y + wall.height) {
-        isTouchedByWallByLeft = true;
-    }
-
-
-    
 
     wall.x -=speedOfWalls;
 
 
-    playerScore = removeWallFromGame(wall, playerScore);
+    playerScore = removeWallFromGame(isGameStarted, wall, playerScore);
     });
 
     return [isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore];

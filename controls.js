@@ -1,4 +1,5 @@
 import { gameHeight, speedOfPlayer} from "./constants.js";
+import { player } from "./entities.js";
 
 let keys = {};
 let keysDiv;
@@ -15,29 +16,29 @@ function keyUp(e) {
 
 
 
-export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, sprite) {
-    if(sprite.y >= 0){
+export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight) {
+    if(player.y >= 0){
       if(!isTouchedByWallByTop) {
         if(keys["38"]){
-          sprite.y -= speedOfPlayer;
+          player.y -= speedOfPlayer;
         }
       }
     }
-    if(sprite.y < gameHeight - sprite.height){
+    if(player.y < gameHeight - player.height){
       if(!isTouchedByWallByBottom) {
         if(keys["40"]){
-          sprite.y += speedOfPlayer;
+          player.y += speedOfPlayer;
         }
       }
     }
     if (!isTouchedByWallByLeft) {
       if(keys["37"]){
-        sprite.x -= speedOfPlayer;
+        player.x -= speedOfPlayer;
       }
     }
     if (!isTouchedByWallByRight) {
       if(keys["39"]){
-      sprite.x += speedOfPlayer;
+        player.x += speedOfPlayer;
       }
     }
 
