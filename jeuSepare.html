@@ -5,37 +5,26 @@
     <script src="./constants.js" type="module/javascript"></script>  
     <script src="./gameObjectsConst.js" type="module/javascript"></script>  
     <script src="./entities.js" type="module/javascript"></script>  
-    <script src="./startGame.js" type="module/javascript"></script>  
+    <script src="./startGame.js" type="module/javascript"></script>   
   </head>
   <body>      
     
     <script type="module">
 
-      import { app, gameWidth, gameHeight, speedOfPlayer, playerWidth, playerHeight}  from "./constants.js";
-      import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls, removeWallFromGame } from "./wallsManagement.js";
+      import { app, gameWidth, gameHeight }  from "./constants.js";
+      import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
-      import { player }  from "./entities.js";
-      import { scoretext, menuBackground, menuLineLeft, menuLineRight, menuLineTop, menuLineBottom ,firstLevelSquareLineLeft, firstLevelSquareLineBottom, firstLevelSquareLineRight, firstLevelSquareLineTop}  from "./gameObjectsConst.js";
-      import { verifyIfGameStart }   from "./startGame.js";
+      import { verifyIfGameStart, hideOrShowObjectsWhenGameStart }   from "./startGame.js";
       let playerScore = 0;
       let isGameStarted = false;
 
-      let underLayer = new PIXI.Container();
-      let topLayer = new PIXI.Container();
-      menuBackground.alpha = 1
+
 
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
-    
-      // Create the sprite and add it to the stage
 
-
-      app.stage.addChild(underLayer);
-      app.stage.addChild(topLayer);
-      topLayer.addChild(player);
 
 
       
-
       
       document.body.appendChild(app.canvas);
       // Add a ticker callback to move the sprite back and forth
@@ -45,37 +34,22 @@
         let isTouchedByWallByLeft = false;
         let isTouchedByWallByBottom = false; 
         let isTouchedByWallByRight = false;
-        
         let isTouchedResponse = []
-        
+        isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore);
+        playerScore = isTouchedResponse[4];
         
         isGameStarted = verifyIfGameStart(isGameStarted);
-
+        timerBeforeSpawningWall(isGameStarted);
         
         if (isGameStarted) {
-          menuBackground.visible = false;
-          menuLineLeft.visible = false;
-          menuLineRight.visible = false;
-          menuLineTop.visible = false;
-          menuLineBottom.visible = false;
-          firstLevelSquareLineLeft.visible = false;
-          firstLevelSquareLineRight.visible = false;
-          firstLevelSquareLineBottom.visible = false;
-          firstLevelSquareLineTop.visible = false;
-
-          scoretext.visible = true;
-          scoretext.text = `Score : ${playerScore}`
-          
-  
+          hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
           elapsed += ticker.deltaTime;
-
-          timerBeforeSpawningWall(underLayer);
           increaseDifficultyOfWalls();
           
-          isTouchedResponse = wallsManagement(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, player, playerScore);
-          playerScore = isTouchedResponse[4];
+          
+          
         }
-        movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], player);
+        movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
 
         
       });
