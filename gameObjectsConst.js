@@ -1,6 +1,7 @@
 import { app, gameWidth, gameHeight} from "./constants.js";
 import { middleLayer } from "./gameLayers.js";
 
+
 const menuLeftCoordinateX = gameWidth*0.20;
 const menuRightCoordinateX = gameWidth*0.80;
 const menuTopCoordinateY = gameHeight*0.20;
@@ -26,6 +27,8 @@ export const textStyle = new PIXI.TextStyle({
     fontSize: 36,
     fill: "#ffffff"
 });
+
+
 
 export const scoretext = new PIXI.Text({
     text:`Score : 0`,
@@ -106,6 +109,20 @@ level1Icon.y = menuFirstLevelSquareTopCoordinateY + levelMinHeight/2;
 level1Icon.width = levelMaxWidth;
 level1Icon.height = levelMaxHeight - levelMinHeight;
 
+
+export const heart1 = PIXI.Sprite.from("Images/Coeur.png");
+export const heart2 = PIXI.Sprite.from("Images/Coeur.png");
+export const heart3 = PIXI.Sprite.from("Images/Coeur.png");
+heart1.width=400;
+heart1.height=400;
+heart2.width=400;
+heart2.height=400;
+heart3.width=400;
+heart3.height=400;
+heart1.position.set(-130, -130);  
+heart2.position.set(-60, -130);  
+heart3.position.set(10, -130); 
+
 menuBackground.alpha = 0.4;
 scoretext.visible = false;
 middleLayer.addChild(titleChooseLevel);
@@ -120,4 +137,7 @@ middleLayer.addChild(firstLevelSquareLineBottom);
 middleLayer.addChild(firstLevelSquareLineRight);
 middleLayer.addChild(firstLevelSquareLineTop);
 middleLayer.addChild(level1Icon);
+middleLayer.addChild(heart1);
+middleLayer.addChild(heart2);
+middleLayer.addChild(heart3);
 

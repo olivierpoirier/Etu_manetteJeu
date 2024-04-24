@@ -1,7 +1,7 @@
 import { menuFirstLevelSquareLeftCoordinateX, menuFirstLevelSquareTopCoordinateY, levelMaxWidth, levelMaxHeight }  from "./gameObjectsConst.js";
 import { scoretext, menuBackground, menuLineLeft, menuLineRight, menuLineTop, 
     menuLineBottom ,firstLevelSquareLineLeft, firstLevelSquareLineBottom, 
-    firstLevelSquareLineRight, firstLevelSquareLineTop, level1Icon}  from "./gameObjectsConst.js";
+    firstLevelSquareLineRight, firstLevelSquareLineTop, level1Icon,heart1,heart2,heart3}  from "./gameObjectsConst.js";
 import { player } from "./entities.js";
 
 
@@ -28,6 +28,9 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
         firstLevelSquareLineBottom.visible = false;
         firstLevelSquareLineTop.visible = false;
         level1Icon.visible = false;
+        heart1.visible = true
+        heart2.visible = true
+        heart3.visible = true
 
         scoretext.visible = true;
         scoretext.text = `Score : ${playerScore}`

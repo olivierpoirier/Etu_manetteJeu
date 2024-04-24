@@ -5,29 +5,67 @@
     <script src="./constants.js" type="module/javascript"></script>  
     <script src="./gameObjectsConst.js" type="module/javascript"></script>  
     <script src="./entities.js" type="module/javascript"></script>  
-    <script src="./startGame.js" type="module/javascript"></script>   
+    <script src="./startGame.js" type="module/javascript"></script> 
+    <script src="./gameLayers.js" type="module/javascript"></script> 
   </head>
   <body>      
-    
     <script type="module">
 
       import { app, gameWidth, gameHeight }  from "./constants.js";
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
       import { verifyIfGameStart, hideOrShowObjectsWhenGameStart }   from "./startGame.js";
+      import {player} from "./entities.js";
+      import {topLayer,middleLayer,underLayer} from "./gameLayers.js";
+     
       let playerScore = 0;
       let isGameStarted = false;
+      let lifeplayer = 3;
 
-
-
+      // Initialize PIXI app
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
 
+      // Function to check if player is out of game
+      function JoueurHorsGame() {
+        const positionJoueur = player.getBounds();
+        return (
+            positionJoueur.x < 0 - player.width 
+        );
+      }
+
+      function MortJoueur() {
+        if (JoueurHorsGame()) {
+            topLayer.removeChild(player);
+            console.log("Joueur mort");
+            lifeplayer--; 
+            if (lifeplayer <= 0) {
+              gameOver(); 
+            } else {
+              restartGame(); 
+            }
+        }
+}
+
+      function gameOver() {
+            // On va faire un affichage ici
+      }
 
 
-      
-      
+      function restartGame() {
+
+          player.position.x =  10;
+          player.position.y = 10;
+          playerScore = 0;
+      }
+
+     
+      const restartButton = document.createElement('button');
+      restartButton.textContent = 'Restart';
+      restartButton.addEventListener('click', restartGame);
+      document.body.appendChild(restartButton);
       document.body.appendChild(app.canvas);
-      // Add a ticker callback to move the sprite back and forth
+      
+  
       let elapsed = 0.0;
       app.ticker.add((ticker) => {
         let isTouchedByWallByTop = false;
@@ -39,24 +77,20 @@
         playerScore = isTouchedResponse[4];
         
         isGameStarted = verifyIfGameStart(isGameStarted);
+        
         timerBeforeSpawningWall(isGameStarted);
         
         if (isGameStarted) {
           hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
           elapsed += ticker.deltaTime;
           increaseDifficultyOfWalls();
-          
-          
-          
         }
+        MortJoueur();
         movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
-
-        
       });
     </script>
     <script src="./wallsManagement.js" type="module/javascript"></script>
     <script src="./controls.js" type="module/javascript"></script>
     <script src="./wallsManagement.js" type="module/javascript"></script>
-        
   </body>
 </html>
