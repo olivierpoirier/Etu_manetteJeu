@@ -69,6 +69,7 @@ export const menuBackground = new PIXI.Graphics()
     .rect(menuLeftCoordinateX, menuTopCoordinateY, menuMaxWidth, menuMaxHeight)
     .fill(0x808080);
 
+
 export const menuLineLeft = new PIXI.Graphics()
     .rect(menuLeftCoordinateX, menuTopCoordinateY, menuMinWidth, menuMaxHeight)
     .fill(0xffffff);
@@ -110,6 +111,19 @@ level1Icon.width = levelMaxWidth;
 level1Icon.height = levelMaxHeight - levelMinHeight;
 
 
+
+export const Restartbutton = new PIXI.Graphics()
+  .beginFill(0xffffff) // Couleur blanche
+  .drawRect(menuFirstLevelSquareLeftCoordinateX, menuFirstLevelSquareTopCoordinateY, levelMaxWidth, levelMinHeight)
+  .endFill();
+
+export const restartText = new PIXI.Text('Restart', {
+  fontFamily: 'Arial',
+  fontSize: 20,
+  fill: 0x000000, 
+});
+
+
 export const heart1 = PIXI.Sprite.from("Images/Coeur.png");
 export const heart2 = PIXI.Sprite.from("Images/Coeur.png");
 export const heart3 = PIXI.Sprite.from("Images/Coeur.png");
@@ -122,6 +136,10 @@ heart3.height=400;
 heart1.position.set(-130, -130);  
 heart2.position.set(-60, -130);  
 heart3.position.set(10, -130); 
+restartText.position.set(
+    menuFirstLevelSquareLeftCoordinateX + levelMaxWidth / 2, 
+    menuFirstLevelSquareTopCoordinateY + levelMinHeight / 2);
+restartText.anchor.set(0.5);
 
 menuBackground.alpha = 0.4;
 scoretext.visible = false;
@@ -140,4 +158,6 @@ middleLayer.addChild(level1Icon);
 middleLayer.addChild(heart1);
 middleLayer.addChild(heart2);
 middleLayer.addChild(heart3);
+Restartbutton.addChild(restartText);
+middleLayer.addChild(Restartbutton);
 
