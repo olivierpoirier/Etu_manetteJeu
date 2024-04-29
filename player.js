@@ -1,4 +1,4 @@
-import { topLayer } from "./gameLayers.js";
+import { ultraTopLayer } from "./gameLayers.js";
 
 
 export const speedOfPlayer = 3;
@@ -9,4 +9,4 @@ export const player = PIXI.Sprite.from('Images/square.png');
 player.width = playerWidth;
 player.height = playerHeight;
 
-topLayer.addChild(player);
+ultraTopLayer.addChild(player);

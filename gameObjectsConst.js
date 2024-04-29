@@ -1,5 +1,5 @@
 import { gameWidth, gameHeight} from "./constants.js";
-import { middleLayer, topLayer } from "./gameLayers.js";
+import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
 
 const menuLeftCoordinateX = gameWidth*0.20;
 const menuRightCoordinateX = gameWidth*0.80;
@@ -140,13 +140,28 @@ level5Icon.height = levelMaxHeight - levelMinHeight;
 
 
 //Constants of backgrounds : 
+export const backgroundLevel2 = PIXI.Sprite.from('Images/Earth.png');
+backgroundLevel2.width = gameWidth;
+backgroundLevel2.height = gameHeight;
+backgroundLevel2.visible = false;
+
 export const backgroundLevel3 = PIXI.Sprite.from('Images/Grotte.png');
 backgroundLevel3.width = gameWidth;
 backgroundLevel3.height = gameHeight;
 backgroundLevel3.visible = false;
 
+export const backgroundLevel4 = PIXI.Sprite.from('Images/maquette.png');
+backgroundLevel4.width = gameWidth;
+backgroundLevel4.height = gameHeight;
+backgroundLevel4.visible = false;
+
+export const backgroundLevel5 = PIXI.Sprite.from('Images/level1Icon.png');
+backgroundLevel5.width = gameWidth;
+backgroundLevel5.height = gameHeight;
+backgroundLevel5.visible = false;
+
 //Constants of texts Objects 
-const textStyle = new PIXI.TextStyle({
+export const textStyle = new PIXI.TextStyle({
     fontFamily: "Verdana",
     fontSize: 36,
     fill: "#ffffff"
@@ -217,10 +232,12 @@ level5text.position.x = fifthLevelSquareLeftCoordinateX + fifthLevelSquare.width
 level5text.position.y = fifthLevelSquareTopCoordinateY + fifthLevelSquare.height + level5text.height/4;
 
 
-
-topLayer.addChild(backgroundLevel3);
+underLayer.addChild(backgroundLevel2);
+ultraTopLayer.addChild(backgroundLevel3);
+underLayer.addChild(backgroundLevel4);
+underLayer.addChild(backgroundLevel5);
 middleLayer.addChild(titleChooseLevel);
-middleLayer.addChild(scoretext);
+ultraMAXIMUMTopLayer.addChild(scoretext);
 middleLayer.addChild(menuBackground);
 middleLayer.addChild(menuLineLeft);
 middleLayer.addChild(menuLineRight);

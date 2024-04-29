@@ -19,7 +19,8 @@
 
       let playerScore = 0;
       let isGameStarted = false;
-      let choosenLevel = 0;
+      let level = 0;
+      
 
 
 
@@ -33,15 +34,24 @@
         let isTouchedByWallByBottom = false; 
         let isTouchedByWallByRight = false;
         let isTouchedResponse = []
-        isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore);
+        let gameStartedAndLevelResponse = []
+        isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level);
         playerScore = isTouchedResponse[4];
-        isGameStarted = verifyIfGameStart(isGameStarted);
-        timerBeforeSpawningWall(isGameStarted);
-        
+
+
+
+        if(!isGameStarted) {
+          [isGameStarted, level] = verifyIfGameStart(isGameStarted);
+        }
+
+
+        //console.log(gameStartedAndLevelResponse);
+        timerBeforeSpawningWall(isGameStarted, level);
+        //console.log(level);
         if (isGameStarted) {
           hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
           elapsed += ticker.deltaTime;
-          increaseDifficultyOfWalls();
+          increaseDifficultyOfWalls(level);
         }
         movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
       });
