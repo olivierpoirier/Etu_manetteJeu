@@ -68,7 +68,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
         const meteorite = MeteoriteSprites[i];
 
         if (isGameStarted) {
-        
+
             if (player.y + player.height > wall.y - speedOfPlayer && player.y <= wall.y && player.x >= wall.x && player.x <= wall.x + wall.width) {
                 isTouchedByWallByBottom = true;
             }
@@ -81,6 +81,11 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
             }
             if (player.x < wall.x + wall.width + speedOfPlayer && player.x >= wall.x + wall.width && player.y >= wall.y && player.y <= wall.y + wall.height) {
                 isTouchedByWallByLeft = true;
+            }
+            
+            if (player.x < meteorite.x + meteorite.width && player.x + player.width > meteorite.x &&
+                player.y < meteorite.y + meteorite.height && player.y + player.height > meteorite.y) {
+                alert("Explosion!"); 
             }
         }
 
