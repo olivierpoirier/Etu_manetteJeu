@@ -8,6 +8,7 @@
   <script src="./entities.js" type="module/javascript"></script>
   <script src="./startGame.js" type="module/javascript"></script>
   <script src="./gameLayers.js" type="module/javascript"></script>
+  <script src="./Death.js" type="module/javascript"></script>
 </head>
 
 <body>
@@ -23,54 +24,15 @@
     import { scoretext, menuBackground, menuLineLeft, menuLineRight, menuLineTop, 
     menuLineBottom ,firstLevelSquareLineLeft, firstLevelSquareLineBottom, 
     firstLevelSquareLineRight, firstLevelSquareLineTop, level1Icon,heart1,heart2,heart3, Restartbutton}  from "./gameObjectsConst.js";
+    import {MortJoueur} from "./Death.js"
     
 
     let playerScore = 0;
     let isGameStarted = false;
-    let lifeplayer = 3;
+    
 
     // Initialize PIXI app
     await app.init({ background: 'black', width: gameWidth, height: gameHeight });
-
-    function JoueurHorsGame() {
-      const positionJoueur = player.getBounds();
-      return (
-        positionJoueur.x < 0 - player.width
-      );
-    }
-
-
-    function MortJoueur() {
-      if (JoueurHorsGame()) {
-        middleLayer.removeChild(player);
-        console.log("Joueur mort");
-        alert("JOUEUR MORT !")
-        lifeplayer = lifeplayer - 1;
-        console.log(lifeplayer)
-        if (lifeplayer <= 0) {
-          gameOver();
-        } else {
-          restartGame();
-        }
-      }
-    }
-
-    function gameOver() {
-      // On va faire un affichage ici
-    }
-
-
-    function restartGame() {
-      // Reposionnement du joueur
-      middleLayer.addChild(player);
-      player.x = 10;
-      player.y = 10;
-      playerScore = 0;
-      isGameStarted = false;
-      scoretext.text = `Score : ${playerScore}`;
-      hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
-    }
-
 
 
     document.body.appendChild(app.canvas);
@@ -95,6 +57,7 @@
         elapsed += ticker.deltaTime;
         increaseDifficultyOfWalls();
       }
+      console.log(isTouchedByWallByRight)
       MortJoueur();
       movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
     });

@@ -1,19 +1,64 @@
 
-import { app, gameWidth, gameHeight, player } from "./constants.js";
+import {hideOrShowObjectsWhenGameStart } from "./startGame.js";
+import { player } from "./entities.js";
+import { topLayer, middleLayer, underLayer } from "./gameLayers.js";
 
-function JoueurHorsGame() {
+import { scoretext}  from "./gameObjectsConst.js";
+let playerScore = 0;
+let isGameStarted = false;
+let lifeplayer = 3;
+
+export function JoueurHorsGame() {
     const positionJoueur = player.getBounds();
     return (
-        positionJoueur.x < 0 || // Position hori
-        positionJoueur.x + positionJoueur.width > gameWidth ||
-        positionJoueur.y < 0 ||
-        positionJoueur.y + positionJoueur.height > gameHeight
+      positionJoueur.x < 0 - player.width
     );
-}
+  }
 
 export function MortJoueur() {
     if (JoueurHorsGame()) {
-        app.stage.removeChild(player);
-        alert("JOUEUR MORT !")
+      topLayer.removeChild(player);
+      console.log("Joueur mort");
+      //alert("JOUEUR MORT !")
+      lifeplayer = lifeplayer - 1;
+      console.log(lifeplayer)
+      if (lifeplayer <= 0) {
+        gameOver();
+      } else {
+        restartGame();
+      }
+      
+      
     }
-}
+  
+  }
+
+  export function gameOver() {
+    
+  }
+
+
+ export function mortImpact(mortoupas){
+    if(mortoupas === true){
+        topLayer.removeChild(player);
+        console.log("Joueur mort");
+        lifeplayer = lifeplayer - 1;
+        console.log(lifeplayer)
+        if (lifeplayer <= 0) {
+            gameOver();
+          } else {
+            restartGame();
+          }    
+    }
+  }
+  export function restartGame() {
+    // Reposionnement du joueur
+    topLayer.addChild(player);
+    player.x = 20;
+    player.y = 20;
+    playerScore = 0;
+    isGameStarted = false;
+    scoretext.text = `Score : ${playerScore}`;
+    hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
+  }
+

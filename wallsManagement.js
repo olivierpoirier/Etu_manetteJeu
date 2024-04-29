@@ -1,6 +1,7 @@
 import { gameWidth, gameHeight, speedOfPlayer } from "./constants.js";
 import { player } from "./entities.js";
 import { underLayer } from "./gameLayers.js";
+import { MortJoueur,mortImpact } from "./Death.js";
 
 let wallSprites = [];
 let MeteoriteSprites = [];
@@ -85,7 +86,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
             
             if (player.x < meteorite.x + meteorite.width && player.x + player.width > meteorite.x &&
                 player.y < meteorite.y + meteorite.height && player.y + player.height > meteorite.y) {
-                alert("Explosion!"); 
+                mortImpact(true)
             }
         }
 
