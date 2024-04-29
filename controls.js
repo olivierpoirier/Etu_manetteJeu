@@ -1,5 +1,5 @@
-import { gameHeight, speedOfPlayer} from "./constants.js";
-import { player } from "./entities.js";
+import { gameHeight} from "./constants.js";
+import { player, speedOfPlayer } from "./player.js";
 
 let keys = {};
 let keysDiv;

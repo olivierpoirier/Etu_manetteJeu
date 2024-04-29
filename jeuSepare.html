@@ -14,18 +14,15 @@
       import { app, gameWidth, gameHeight }  from "./constants.js";
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
-      import { verifyIfGameStart, hideOrShowObjectsWhenGameStart }   from "./startGame.js";
+      import { verifyIfGameStart }   from "./startGame.js";
+      import { hideOrShowObjectsWhenGameStart } from "./gameObjectsConst.js";
+
       let playerScore = 0;
       let isGameStarted = false;
 
 
 
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
-
-
-
-      
-      
       document.body.appendChild(app.canvas);
       // Add a ticker callback to move the sprite back and forth
       let elapsed = 0.0;
@@ -37,7 +34,6 @@
         let isTouchedResponse = []
         isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore);
         playerScore = isTouchedResponse[4];
-        
         isGameStarted = verifyIfGameStart(isGameStarted);
         timerBeforeSpawningWall(isGameStarted);
         
@@ -45,13 +41,8 @@
           hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
           elapsed += ticker.deltaTime;
           increaseDifficultyOfWalls();
-          
-          
-          
         }
         movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
-
-        
       });
     </script>
     <script src="./wallsManagement.js" type="module/javascript"></script>

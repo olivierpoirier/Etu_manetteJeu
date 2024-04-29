@@ -1,5 +1,5 @@
-import { gameWidth, gameHeight, speedOfPlayer } from "./constants.js";
-import { player } from "./entities.js";
+import { gameWidth, gameHeight } from "./constants.js";
+import { player, speedOfPlayer } from "./player.js";
 import { underLayer } from "./gameLayers.js";
 
 let wallSprites = [];
