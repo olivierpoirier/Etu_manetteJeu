@@ -2,6 +2,7 @@
 await PIXI.Assets.load('Images/square.png');
 await PIXI.Assets.load('Images/level1Icon.png');
 await PIXI.Assets.load('Images/Coeur.png');
+await PIXI.Assets.load("/Images/metoirite.png")
 export const app = new PIXI.Application();
 export const gameWidth = 1000;
 export const gameHeight = 500;
