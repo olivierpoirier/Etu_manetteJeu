@@ -41,7 +41,11 @@ export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isT
         player.x += speedOfPlayer;
       }
     }
-
+    if(keys['80']) {
+      console.log('allo')
+      let aud = new Audio("Audio/menu.mp3");
+      aud.play();
+    }
   }
 
   window.addEventListener("keydown", keyDown);
