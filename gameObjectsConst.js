@@ -126,7 +126,7 @@ level3Icon.y = thirdLevelSquareTopCoordinateY + levelMinHeight/2;
 level3Icon.width = levelMaxWidth - levelMinWidth;
 level3Icon.height = levelMaxHeight - levelMinHeight;
 
-const level4Icon = PIXI.Sprite.from('Images/maquette.png');
+const level4Icon = PIXI.Sprite.from('Images/LargeSpace.png');
 level4Icon.x = fourthLevelSquareLeftCoordinateX + levelMinWidth/2;
 level4Icon.y = fourthLevelSquareTopCoordinateY + levelMinHeight/2;
 level4Icon.width = levelMaxWidth - levelMinWidth;
@@ -150,7 +150,7 @@ backgroundLevel3.width = gameWidth;
 backgroundLevel3.height = gameHeight;
 backgroundLevel3.visible = false;
 
-export const backgroundLevel4 = PIXI.Sprite.from('Images/maquette.png');
+export const backgroundLevel4 = PIXI.Sprite.from('Images/LargeSpace.png');
 backgroundLevel4.width = gameWidth;
 backgroundLevel4.height = gameHeight;
 backgroundLevel4.visible = false;
