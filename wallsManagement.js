@@ -10,67 +10,77 @@ let timeUntilWallSpawn = 200;
 let comptorHowManyWallsDied = 0;
 let changedAtStart = false;
 const normalWallType = "NORMAL";
+const ghostWallType = "GHOST";
+const alienWallType = "ALIEN";
 
 export function increaseDifficultyOfWalls() {
-    if(comptorHowManyWallsDied >= 100) {
-        timeUntilWallSpawn -= 15;
-        speedOfWalls += 1;
-        comptorHowManyWallsDied = 0;
+    try {
+        if(comptorHowManyWallsDied >= 100) {
+            timeUntilWallSpawn -= 15;
+            speedOfWalls += 1;
+            comptorHowManyWallsDied = 0;
+        }
+    } catch(e) {
+        console.error(e);
     }
-    
 
-    
 }
 
 function spawnGhostWall(wallSprite) {
-    let minImage = 1;
-    let maxImage = 3;
-    let randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage;
-    const wallType = "GHOST";
+    const minImage = 1;
+    const maxImage = 3;
+    const randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage;
 
-    if(randomInt === 1) {
-        wallSprite = new Wall('Images/Ghost.png', false, false, wallType);
-    } else if(randomInt === 2) {
-        wallSprite = new Wall('Images/Ghost2.png', false, false, wallType);
-    } else if(randomInt === 3) {
-        wallSprite = new Wall('Images/Ghost3.png', false, false, wallType);
-    }else {
-        console.log("error");
+    try {
+        if(randomInt === 1) {
+            wallSprite = new Wall('Images/Ghost.png', false, false, ghostWallType);
+        } else if(randomInt === 2) {
+            wallSprite = new Wall('Images/Ghost2.png', false, false, ghostWallType);
+        } else if(randomInt === 3) {
+            wallSprite = new Wall('Images/Ghost3.png', false, false, ghostWallType);
+        }else {
+            console.error("Error when spawning Ghost");
+        }
+        wallSprite.alpha = Math.random().toFixed(2);
+        wallSprite.isAlphaIncrementing = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+    } catch(e) {
+        console.error(e);
     }
-
-    wallSprite.alpha = Math.random().toFixed(2);
-    wallSprite.isAlphaIncrementing = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
 
     return wallSprite;
 } 
 
-function spawnAlienWall(wallSprite) {
-    let minImage = 1
-    let maxImage = 8
-    let randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
-    const wallType = "ALIEN";
+function spawnAlienWall() {
+    const minImage = 1
+    const maxImage = 8
+    const randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
+    
+    let wallSprite;
 
-    if(randomInt === 1) {
-        wallSprite = new Wall('Images/Alien1.png', false, false, wallType);
-    } else if(randomInt === 2) {
-        wallSprite = new Wall('Images/Alien2.png', false, false, wallType);
-    } else if(randomInt === 3) {
-        wallSprite = new Wall('Images/Alien3.png', false, false, wallType);
-    } else if(randomInt === 4) {
-        wallSprite = new Wall('Images/Alien4.png', false, false, wallType);
-    } else if(randomInt === 5) {
-        wallSprite = new Wall('Images/Alien5.png', false, false, wallType);
-    } else if(randomInt === 6) {
-        wallSprite = new Wall('Images/Alien6.png', false, false, wallType);
-    } else if(randomInt === 7) {
-        wallSprite = new Wall('Images/Alien7.png', false, false, wallType);
-    } else if(randomInt === 8) {
-        wallSprite = new Wall('Images/Alien8.png', false, false, wallType);
-    }else {
-        console.log("error");
+    try {
+        if(randomInt === 1) {
+            wallSprite = new Wall('Images/Alien1.png', false, false, alienWallType);
+        } else if(randomInt === 2) {
+            wallSprite = new Wall('Images/Alien2.png', false, false, alienWallType);
+        } else if(randomInt === 3) {
+            wallSprite = new Wall('Images/Alien3.png', false, false, alienWallType);
+        } else if(randomInt === 4) {
+            wallSprite = new Wall('Images/Alien4.png', false, false, alienWallType);
+        } else if(randomInt === 5) {
+            wallSprite = new Wall('Images/Alien5.png', false, false, alienWallType);
+        } else if(randomInt === 6) {
+            wallSprite = new Wall('Images/Alien6.png', false, false, alienWallType);
+        } else if(randomInt === 7) {
+            wallSprite = new Wall('Images/Alien7.png', false, false, alienWallType);
+        } else if(randomInt === 8) {
+            wallSprite = new Wall('Images/Alien8.png', false, false, alienWallType);
+        }else {
+            console.error("Error when spawning alien");
+        }
+        wallSprite.isZigZagingToBottomLeft = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+    } catch(e) {
+        console.error(e);
     }
-    wallSprite.isZigZagingToBottomLeft = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-
     return wallSprite;
 } 
 
@@ -93,102 +103,114 @@ function spawnChangingNumber() {
 }
 
 function spawnWall(level) {
-    console.log("spawn");
-    let wallSprite;
-    if (level === 3) {
-        wallSprite = spawnGhostWall(wallSprite);
+    try {
         
-    } else if (level === 4){
-        wallSprite = spawnAlienWall(wallSprite);
-    } else if (level === 5) {
-        let minImage = 1
-        let maxImage = 3
-        let randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
-        if(randomInt === 1) {
+        let wallSprite;
+        if (level === 3) {
+            wallSprite = spawnGhostWall();
+            console.log("Spawn Ghost");
+        } else if (level === 4){
+            wallSprite = spawnAlienWall();
+   
+        } else if (level === 5) {
+            let minImage = 1
+            let maxImage = 3
+            let randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
+            if(randomInt === 1) {
+                wallSprite = new Wall('Images/square.png', false, false, normalWallType);
+            } else if(randomInt === 2) {
+                wallSprite = spawnGhostWall(wallSprite);
+            } else if(randomInt === 3) {
+                wallSprite = spawnAlienWall(wallSprite);
+            }else {
+                console.log("error");
+            }
+        } else {
             wallSprite = new Wall('Images/square.png', false, false, normalWallType);
-        } else if(randomInt === 2) {
-            wallSprite = spawnGhostWall(wallSprite);
-        } else if(randomInt === 3) {
-            wallSprite = spawnAlienWall(wallSprite);
-        }else {
-            console.log("error");
         }
-    } else {
-        wallSprite = new Wall('Images/square.png', false, false, normalWallType);
+    
+        //if(level === 5) {
+        //    wallSprite.isOnlyGoingForward = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+        //}
+        
+        wallSprite.sprite.width = 50;
+        wallSprite.sprite.height = 50;
+        wallSprite.sprite.x = gameWidth;
+        wallSprite.sprite.y = Math.floor(Math.random() * (gameHeight-wallSprite.sprite.height));
+    
+        underLayer.addChild(wallSprite.sprite);
+        wallSprites.push(wallSprite);
+        isWallSpawning = false;
+    } catch(e) {
+        console.error(e);
     }
 
-    //if(level === 5) {
-    //    wallSprite.isOnlyGoingForward = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-    //}
-    
-    wallSprite.sprite.width = 50;
-    wallSprite.sprite.height = 50;
-    wallSprite.sprite.x = gameWidth;
-    wallSprite.sprite.y = Math.floor(Math.random() * (gameHeight-wallSprite.sprite.height));
-
-    underLayer.addChild(wallSprite.sprite);
-    wallSprites.push(wallSprite);
-    isWallSpawning = false;
-    
-      
 }
 
 
 export function timerBeforeSpawningWall(isGameStarted, level) {
-    if (!isWallSpawning) {
-        if(!isGameStarted) {
-        
-            timeUntilWallSpawn = Math.floor((Math.random()* 2000) + 600)
-            setTimeout(spawnWall, timeUntilWallSpawn, level);
+    try {
+        if (!isWallSpawning) {
+            if(!isGameStarted) {
             
-            
-        } else {
-            if(!changedAtStart) {
-                wallSprites.forEach(wall => {
-                    underLayer.removeChild(wall.sprite);
-                });
-                wallSprites.splice(0 , wallSprites.length);
-                timeUntilWallSpawn = 200;
-                changedAtStart = true;
+                timeUntilWallSpawn = Math.floor((Math.random()* 2000) + 600)
+                setTimeout(spawnWall, timeUntilWallSpawn, level);
+                
+                
+            } else {
+                if(!changedAtStart) {
+                    wallSprites.forEach(wall => {
+                        underLayer.removeChild(wall.sprite);
+                    });
+                    wallSprites.splice(0 , wallSprites.length);
+                    timeUntilWallSpawn = 200;
+                    changedAtStart = true;
+                }
+                setTimeout(spawnWall, timeUntilWallSpawn, level);
             }
-            setTimeout(spawnWall, timeUntilWallSpawn, level);
+            
+            //timeUntilWallSpawn -= 25;
+            isWallSpawning = true;
         }
-        
-        //timeUntilWallSpawn -= 25;
-        isWallSpawning = true;
+    } catch(e) {
+        console.error(e);
     }
+
 }
 
 export function removeWallFromGame(isGameStarted, wall, playerScore, level) {
-    if(wall.sprite.x + wall.sprite.width < 0) {
-        underLayer.removeChild(wall.sprite);
-        wallSprites.shift(wall);
-        //console.log(wallSprites.length);
-        if(isGameStarted) {
-            comptorHowManyWallsDied += 1;
-            if(level === 1) {
-                playerScore += 10;
+    try {
+        if(wall.sprite.x + wall.sprite.width < 0) {
+            underLayer.removeChild(wall.sprite);
+            wallSprites.shift(wall);
+            //console.log(wallSprites.length);
+            if(isGameStarted) {
+                comptorHowManyWallsDied += 1;
+                if(level === 1) {
+                    playerScore += 10;
+                }
+                else if(level === 2) {
+                    playerScore += 25;
+                }
+                else if(level === 3) {
+                    playerScore += 35;
+                }
+                else if(level === 4) {
+                    playerScore += 40;
+                }
+                else if(level === 5) {
+                    playerScore += 50;
+                } else {
+                    playerScore += 0;
+                }   
             }
-            else if(level === 2) {
-                playerScore += 25;
-            }
-            else if(level === 3) {
-                playerScore += 35;
-            }
-            else if(level === 4) {
-                playerScore += 40;
-            }
-            else if(level === 5) {
-                playerScore += 50;
-            } else {
-                playerScore += 0;
-            }
-            
         }
-
+    } catch(e) {
+        console.error(e);
     }
     return playerScore
 }
+
 export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level) {
 
     wallSprites.forEach(wall => {
