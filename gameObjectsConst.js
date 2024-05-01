@@ -232,6 +232,19 @@ level5text.position.x = fifthLevelSquareLeftCoordinateX + fifthLevelSquare.width
 level5text.position.y = fifthLevelSquareTopCoordinateY + fifthLevelSquare.height + level5text.height/4;
 
 
+export const heart1 = PIXI.Sprite.from("Images/Coeur.png");
+export const heart2 = PIXI.Sprite.from("Images/Coeur.png");
+export const heart3 = PIXI.Sprite.from("Images/Coeur.png");
+heart1.width=400;
+heart1.height=400;
+heart2.width=400;
+heart2.height=400;
+heart3.width=400;
+heart3.height=400;
+heart1.position.set(-130, -130);  
+heart2.position.set(-60, -130);  
+heart3.position.set(10, -130); 
+
 underLayer.addChild(backgroundLevel2);
 ultraTopLayer.addChild(backgroundLevel3);
 underLayer.addChild(backgroundLevel4);
@@ -258,4 +271,6 @@ middleLayer.addChild(level2text);
 middleLayer.addChild(level3text);
 middleLayer.addChild(level4text);
 middleLayer.addChild(level5text);
-
+middleLayer.addChild(heart1);
+middleLayer.addChild(heart2);
+middleLayer.addChild(heart3);
