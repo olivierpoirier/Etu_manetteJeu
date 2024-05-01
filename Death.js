@@ -1,6 +1,6 @@
 
-import {hideOrShowObjectsWhenGameStart } from "./startGame.js";
-import { player } from "./entities.js";
+import {hideOrShowObjectsWhenGameStart } from "./gameObjectsConst.js";
+import { player } from "./player.js";
 import { topLayer, middleLayer, underLayer } from "./gameLayers.js";
 
 import { scoretext}  from "./gameObjectsConst.js";

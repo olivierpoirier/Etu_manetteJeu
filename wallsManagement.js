@@ -2,6 +2,7 @@ import { gameWidth, gameHeight } from "./constants.js";
 import { player, speedOfPlayer } from "./player.js";
 import { underLayer } from "./gameLayers.js";
 import { Wall } from "./wall.js";
+import {mortImpact } from "./Death.js";
 
 let wallSprites = [];
 let speedOfWalls = 5;
@@ -12,6 +13,7 @@ let changedAtStart = false;
 const normalWallType = "NORMAL";
 const ghostWallType = "GHOST";
 const alienWallType = "ALIEN";
+const DangerWallType = "DANGER";
 
 export function increaseDifficultyOfWalls() {
     try {
@@ -84,6 +86,27 @@ function spawnAlienWall() {
     return wallSprite;
 } 
 
+function spawnDanger(){
+    const minImage = 1
+    const maxImage = 2
+    const randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
+    
+    let wallSprite;
+    try {
+        if(randomInt){
+            wallSprite = new Wall('Images/Flamme.png', false, false, DangerWallType);
+        }else if(randomInt === 2){
+            wallSprite = new Wall('Images/metoirite.png', false, false, DangerWallType);
+        }else {
+            console.error("Error when spawning danger");
+        }
+        
+    } catch (e) {
+        console.error(e);
+    }
+    return wallSprite;
+    
+}
 function spawnChangingNumber() {
     const textStyle = new PIXI.TextStyle({
         fontFamily: "Verdana",
@@ -125,7 +148,21 @@ function spawnWall(level) {
             }else {
                 console.log("error");
             }
-        } else {
+        }else if(level === 2){
+            let minImage = 1
+            let maxImage = 3
+            let randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
+            if(randomInt === 1) {
+                wallSprite = new Wall('Images/square.png', false, false, normalWallType);
+            } else if(randomInt === 2) {
+                wallSprite = new Wall('Images/square.png', false, false, normalWallType);
+            } else if(randomInt === 3) {
+                wallSprite = spawnDanger(wallSprite)
+            }else {
+                console.log("error");
+            }
+        } 
+        else {
             wallSprite = new Wall('Images/square.png', false, false, normalWallType);
         }
     
@@ -278,10 +315,17 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
         if(wall.sprite.y + wall.sprite.height >= gameHeight){
             wall.isZigZagingToBottomLeft = false;
         }
+
+    if(wall.wallType === "DANGER"){
+        if (player.x < wall.sprite.x +  wall.sprite.width && player.x + player.width >  wall.sprite.x &&
+            player.y < wall.sprite.y +  wall.sprite.height && player.y + player.height >  wall.sprite.y) {
+            mortImpact(true)
+        }
+    }
+        
     }
 
-    
-       
+
     wall.sprite.x -=speedOfWalls;
     
 
