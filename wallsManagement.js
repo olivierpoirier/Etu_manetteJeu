@@ -93,7 +93,7 @@ function spawnDanger(){
     
     let wallSprite;
     try {
-        if(randomInt){
+        if(randomInt === 1){
             wallSprite = new Wall('Images/Flamme.png', false, false, DangerWallType);
         }else if(randomInt === 2){
             wallSprite = new Wall('Images/metoirite.png', false, false, DangerWallType);
@@ -258,6 +258,9 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
             if(player.y - speedOfWalls > 0){
                 player.y -= speedOfWalls;
             }
+            if(wall.wallType === "DANGER") {
+                mortImpact(true)
+            }
         }
 
         if (player.y < wall.sprite.y + wall.sprite.height + speedOfPlayer && player.y >= wall.sprite.y + wall.sprite.height && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
@@ -265,18 +268,27 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
             if(player.y + player.height + speedOfWalls < gameHeight){
                 player.y += speedOfWalls;
             }
+            if(wall.wallType === "DANGER") {
+                mortImpact(true)
+            }
         }
 
 
         if (player.x + player.width > wall.sprite.x - speedOfPlayer && player.x <= wall.sprite.x  && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
             isTouchedByWallByRight = true;
             player.x -= speedOfWalls;
+            if(wall.wallType === "DANGER") {
+                mortImpact(true)
+            }
         }
         
         if (player.x < wall.sprite.x + wall.sprite.width + speedOfPlayer && player.x >= wall.sprite.x + wall.sprite.width && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
             isTouchedByWallByLeft = true;
             if(player.x + player.width + speedOfWalls < gameWidth){
                 player.x += speedOfWalls;
+            }
+            if(wall.wallType === "DANGER") {
+                mortImpact(true)
             }
         }
     }
@@ -315,13 +327,6 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
         if(wall.sprite.y + wall.sprite.height >= gameHeight){
             wall.isZigZagingToBottomLeft = false;
         }
-
-    if(wall.wallType === "DANGER"){
-        if (player.x < wall.sprite.x +  wall.sprite.width && player.x + player.width >  wall.sprite.x &&
-            player.y < wall.sprite.y +  wall.sprite.height && player.y + player.height >  wall.sprite.y) {
-            mortImpact(true)
-        }
-    }
         
     }
 

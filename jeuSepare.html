@@ -4,6 +4,7 @@
     <script src="pixi.min.js"></script>
     <script src="./constants.js" type="module/javascript"></script>  
     <script src="./gameObjectsConst.js" type="module/javascript"></script>   
+    <script src= "./Death.js" type="module/javascript"></script>
     <script src="./startGame.js" type="module/javascript"></script>   
   </head>
   <body>      
@@ -15,6 +16,7 @@
       import { movementControl }  from "./controls.js";
       import { verifyIfGameStart }   from "./startGame.js";
       import { hideOrShowObjectsWhenGameStart } from "./gameObjectsConst.js";
+      import {MortJoueur} from "./Death.js";
 
       let playerScore = 0;
       let isGameStarted = false;
@@ -52,6 +54,7 @@
           elapsed += ticker.deltaTime;
           increaseDifficultyOfWalls();
         }
+        MortJoueur();
         movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
       });
     </script>
