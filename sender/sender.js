@@ -1,12 +1,19 @@
-const appId = "TODO";
-var currentSession;
-const nameSpace1 = "urn:x-cast:testChannel";
+const appId = "8713599E";
+let currentSession;
+const nameSpace1 = "urn:x-cast:gameChannel";
+let isChromecastSucces = false;
 
 
+function sessionListener(newSession) {
+    currentSession = newSession;
+    console.log(newSession)
+
+}
 
 
 function onInitSuccess() {
     console.log('Chromecast init success');
+    isChromecastSucces = true;
 }
 
 function onError(error) {
@@ -18,6 +25,7 @@ function initializeApiOnly() {
     const sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
     const apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
     chrome.cast.initialize(apiConfig, onInitSuccess, onError);
+    console.log(sessionListener.message);
 }
 
 document.getElementById("con").addEventListener("click", () => {
@@ -28,10 +36,6 @@ document.getElementById("con").addEventListener("click", () => {
 
 
 
-function sessionListener(newSession) {
-    currentSession = newSession;
-
-}
 
 function receiverListener(availability) {
 }
@@ -48,24 +52,42 @@ function sendCommands() {
 function getWindowPosition() {
     //console.log(window.screenX)
     //console.log(window.innerWidth/2)
-    if(window.screenX - window.innerWidth/2 < window.screen.availWidth*0.10){
-        console.log("Sprite goes left");
-    } 
-    else if(window.screenX + window.innerWidth/2 > window.screen.availWidth*0.40){
-        console.log("Sprite goes right");
-    } else {
-        console.log("Sprite don't move on x");
-    } 
-    //console.log(window)
+    console.log(currentSession)
+    if(isChromecastSucces) {
+        let whereIsGoingPlayerX;
+        let whereIsGoingPlayerY;
+    
+        let objPosition = {
+            whereIsGoingPlayerX: whereIsGoingPlayerX,
+            whereIsGoingPlayerY: whereIsGoingPlayerY
+        }
+    
+        if(window.screenX - window.innerWidth/2 < window.screen.availWidth*0.10){
+            console.log("Sprite goes left");
+            whereIsGoingPlayerX = "Left";
+        } else if(window.screenX + window.innerWidth/2 > window.screen.availWidth*0.40){
+            console.log("Sprite goes right");
+            whereIsGoingPlayerX = "Right";
+        } else {
+            console.log("Sprite don't move on x");
+            whereIsGoingPlayerX = "Stays";
+        } 
+        //console.log(window)
+    
+        if(window.screenY - window.innerHeight/2 < window.screen.availHeight*0.01){
+            console.log("Sprite goes up");
+            whereIsGoingPlayerY = "Up";
+        } else if(window.screenY + window.innerHeight/2 > window.screen.availHeight*0.50){
+            console.log("Sprite goes down");
+            whereIsGoingPlayerY = "Down";
+        } else {
+            console.log("Sprite don't move on y");
+            whereIsGoingPlayerY = "Stays";
+        } 
+        let messageToSend = JSON.stringify(objPosition);
+        currentSession.sendMessage(nameSpace1, messageToSend);
+    }
 
-    if(window.screenY - window.innerHeight/2 < window.screen.availHeight*0.01){
-        console.log("Sprite goes up");
-    } 
-    else if(window.screenY + window.innerHeight/2 > window.screen.availHeight*0.50){
-        console.log("Sprite goes down");
-    } else {
-        console.log("Sprite don't move on y");
-    } 
 }
 
 setInterval(getWindowPosition, 100)

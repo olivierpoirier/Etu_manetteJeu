@@ -1,32 +1,30 @@
-import { gameHeight} from "./constants.js";
-import { player, speedOfPlayer } from "./player.js";
+import { gameHeight } from "../constants.js";
+import { player, speedOfPlayer } from "../player.js";
+
+const context = cast.framework.CastReceiverContext.getInstance();
+const CHANNEL = 'urn:x-cast:testChannel';
+
+context.addCustomMessageListener(CHANNEL, handleMessageFromSender);
+
 
 let keys = {};
 let keysDiv;
 
 function keyDown(e) {
-  try {
     //console.log(e.keyCode);
     keys[e.keyCode] = true;
-  } catch(e) {
-    console.error(e);
-  }
-
 }
 
 function keyUp(e) {
-  try {
     //console.log(e.keyCode);
     keys[e.keyCode] = false;
-  } catch(e) {
-    console.error(e);
-  }
 }
 
+function handleMessageFromSender(message) {
+    console.log(message);
+}
 
-
-export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight) {
-  try {
+export function castControlManagement(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight) {
     if(player.y >= 0){
       if(!isTouchedByWallByTop) {
         if(keys["38"]){
@@ -56,12 +54,8 @@ export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isT
       let aud = new Audio("Audio/menu.mp3");
       aud.play();
     }
-  } catch(e) {
-    console.error(e);
   }
-    
-}
 
-window.addEventListener("keydown", keyDown);
-window.addEventListener("keyup", keyUp);
-keysDiv = document.querySelector("#keys");
+  window.addEventListener("keydown", keyDown);
+  window.addEventListener("keyup", keyUp);
+  keysDiv = document.querySelector("#keys");

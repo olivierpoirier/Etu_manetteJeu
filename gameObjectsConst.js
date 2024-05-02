@@ -33,32 +33,37 @@ const levelMinHeight = gameWidth*0.005;
 
 
 export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
-    if (isGameStarted) {
-        menuBackground.visible = false;
-        menuLineLeft.visible = false;
-        menuLineRight.visible = false;
-        menuLineTop.visible = false;
-        menuLineBottom.visible = false;
-        level1Icon.visible = false;
-        level2Icon.visible = false;
-        level3Icon.visible = false;
-        level4Icon.visible = false;
-        level5Icon.visible = false;
-        titleChooseLevel.visible = false;
-        level1text.visible = false;
-        level2text.visible = false;
-        level3text.visible = false;
-        level4text.visible = false;
-        level5text.visible = false;
-        firstLevelSquare.visible = false;
-        secondLevelSquare.visible = false;
-        thirdLevelSquare.visible = false;
-        fourthLevelSquare.visible = false;
-        fifthLevelSquare.visible = false;
-
-        scoretext.visible = true;
-        scoretext.text = `Score : ${playerScore}`
+    try {
+        if (isGameStarted) {
+            menuBackground.visible = false;
+            menuLineLeft.visible = false;
+            menuLineRight.visible = false;
+            menuLineTop.visible = false;
+            menuLineBottom.visible = false;
+            level1Icon.visible = false;
+            level2Icon.visible = false;
+            level3Icon.visible = false;
+            level4Icon.visible = false;
+            level5Icon.visible = false;
+            titleChooseLevel.visible = false;
+            level1text.visible = false;
+            level2text.visible = false;
+            level3text.visible = false;
+            level4text.visible = false;
+            level5text.visible = false;
+            firstLevelSquare.visible = false;
+            secondLevelSquare.visible = false;
+            thirdLevelSquare.visible = false;
+            fourthLevelSquare.visible = false;
+            fifthLevelSquare.visible = false;
+    
+            scoretext.visible = true;
+            scoretext.text = `Score : ${playerScore}`
+        }
+    } catch(e) {
+        console.error(e);
     }
+
 }
 
 // Constants of the menu : 

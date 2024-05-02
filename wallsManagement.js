@@ -129,9 +129,6 @@ function spawnWall(level) {
             wallSprite = new Wall('Images/square.png', false, false, normalWallType);
         }
     
-        //if(level === 5) {
-        //    wallSprite.isOnlyGoingForward = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-        //}
         
         wallSprite.sprite.width = 50;
         wallSprite.sprite.height = 50;
@@ -213,81 +210,86 @@ export function removeWallFromGame(isGameStarted, wall, playerScore, level) {
 
 export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level) {
 
-    wallSprites.forEach(wall => {
+    try {
+        wallSprites.forEach(wall => {
 
-    if(isGameStarted) {
-        if (player.y + player.height > wall.sprite.y - speedOfPlayer && player.y <= wall.sprite.y  && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
-            isTouchedByWallByBottom = true;
-            if(player.y - speedOfWalls > 0){
-                player.y -= speedOfWalls;
-            }
-        }
-
-        if (player.y < wall.sprite.y + wall.sprite.height + speedOfPlayer && player.y >= wall.sprite.y + wall.sprite.height && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
-            isTouchedByWallByTop = true;
-            if(player.y + player.height + speedOfWalls < gameHeight){
-                player.y += speedOfWalls;
-            }
-        }
-
-
-        if (player.x + player.width > wall.sprite.x - speedOfPlayer && player.x <= wall.sprite.x  && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
-            isTouchedByWallByRight = true;
-            player.x -= speedOfWalls;
-        }
+            if(isGameStarted) {
+                if (player.y + player.height > wall.sprite.y - speedOfPlayer && player.y <= wall.sprite.y  && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
+                    isTouchedByWallByBottom = true;
+                    if(player.y - speedOfWalls > 0){
+                        player.y -= speedOfWalls;
+                    }
+                }
         
-        if (player.x < wall.sprite.x + wall.sprite.width + speedOfPlayer && player.x >= wall.sprite.x + wall.sprite.width && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
-            isTouchedByWallByLeft = true;
-            if(player.x + player.width + speedOfWalls < gameWidth){
-                player.x += speedOfWalls;
+                if (player.y < wall.sprite.y + wall.sprite.height + speedOfPlayer && player.y >= wall.sprite.y + wall.sprite.height && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
+                    isTouchedByWallByTop = true;
+                    if(player.y + player.height + speedOfWalls < gameHeight){
+                        player.y += speedOfWalls;
+                    }
+                }
+        
+        
+                if (player.x + player.width > wall.sprite.x - speedOfPlayer && player.x <= wall.sprite.x  && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
+                    isTouchedByWallByRight = true;
+                    player.x -= speedOfWalls;
+                }
+                
+                if (player.x < wall.sprite.x + wall.sprite.width + speedOfPlayer && player.x >= wall.sprite.x + wall.sprite.width && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
+                    isTouchedByWallByLeft = true;
+                    if(player.x + player.width + speedOfWalls < gameWidth){
+                        player.x += speedOfWalls;
+                    }
+                }
             }
-        }
+        
+        
+            
+        
+          
+            if(wall.wallType === "GHOST") {
+                if(wall.sprite.alpha > 0 && !wall.isAlphaIncrementing) {
+                    wall.sprite.alpha -= 0.02;
+                }
+                if(wall.sprite.alpha <= 1 && wall.isAlphaIncrementing) {
+                    wall.sprite.alpha += 0.02;
+                }
+                if(wall.sprite.alpha<= 0){
+                    wall.isAlphaIncrementing = true;
+                }
+        
+                if(wall.sprite.alpha>= 1){
+                    wall.isAlphaIncrementing = false;
+                }
+            }
+        
+            if(wall.wallType === "ALIEN") {
+                if(!wall.isZigZagingToBottomLeft) {
+                    wall.sprite.y -= speedOfWalls;
+                }
+                if(wall.isZigZagingToBottomLeft) {
+                    wall.sprite.y += speedOfWalls;
+                }
+                if(wall.sprite.y <= 0){
+                    wall.isZigZagingToBottomLeft = true;
+                }
+        
+                if(wall.sprite.y + wall.sprite.height >= gameHeight){
+                    wall.isZigZagingToBottomLeft = false;
+                }
+            }
+        
+            
+               
+            wall.sprite.x -=speedOfWalls;
+            
+        
+            playerScore = removeWallFromGame(isGameStarted, wall, playerScore, level);
+            });
+        
+    } catch(e) {
+        console.error(e);
     }
-
-
     
-
-  
-    if(wall.wallType === "GHOST") {
-        if(wall.sprite.alpha > 0 && !wall.isAlphaIncrementing) {
-            wall.sprite.alpha -= 0.02;
-        }
-        if(wall.sprite.alpha <= 1 && wall.isAlphaIncrementing) {
-            wall.sprite.alpha += 0.02;
-        }
-        if(wall.sprite.alpha<= 0){
-            wall.isAlphaIncrementing = true;
-        }
-
-        if(wall.sprite.alpha>= 1){
-            wall.isAlphaIncrementing = false;
-        }
-    }
-
-    if(wall.wallType === "ALIEN") {
-        if(!wall.isZigZagingToBottomLeft) {
-            wall.sprite.y -= speedOfWalls;
-        }
-        if(wall.isZigZagingToBottomLeft) {
-            wall.sprite.y += speedOfWalls;
-        }
-        if(wall.sprite.y <= 0){
-            wall.isZigZagingToBottomLeft = true;
-        }
-
-        if(wall.sprite.y + wall.sprite.height >= gameHeight){
-            wall.isZigZagingToBottomLeft = false;
-        }
-    }
-
-    
-       
-    wall.sprite.x -=speedOfWalls;
-    
-
-    playerScore = removeWallFromGame(isGameStarted, wall, playerScore, level);
-    });
-
     return [isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore];
 
 }
