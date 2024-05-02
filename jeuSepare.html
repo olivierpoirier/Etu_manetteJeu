@@ -6,7 +6,8 @@
     <script src="./gameObjectsConst.js" type="module/javascript"></script>  
     <script src="./entities.js" type="module/javascript"></script>  
     <script src="./startGame.js" type="module/javascript"></script>   
-    <script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+    <script src="./Death.js" type="module/javascript"></script>
+    <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js" type="text/javascript" ></script>
   </head>
   <body>      
     
@@ -18,11 +19,12 @@
       import { verifyIfGameStart }   from "./startGame.js";
       import { hideOrShowObjectsWhenGameStart, showUnlockedLevels } from "./gameObjectsConst.js";
       import { castControlManagement } from "./receiver/controllReceiver.js";
+      import { MortJoueur } from "./Death.js";
 
       let playerScore = 0;
       let isGameStarted = false;
       let level = 0;
-      let isLevel2Unlocked = false;
+      let isLevel2Unlocked = true;
       let isLevel3Unlocked = false;
       let isLevel4Unlocked = false;
       let isLevel5Unlocked = false;
@@ -47,21 +49,21 @@
         playerScore = isTouchedResponse[4];
 
 
-
         if(!isGameStarted) {
-          [isGameStarted, level] = verifyIfGameStart(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
+          [isGameStarted, level] = verifyIfGameStart(isGameStarted, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         }
 
 
 
         //console.log(gameStartedAndLevelResponse);
-        timerBeforeSpawningWall(isGameStarted);
+        timerBeforeSpawningWall(isGameStarted, level);
         //console.log(level);
         if (isGameStarted) {
           hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
           elapsed += ticker.deltaTime;
           increaseDifficultyOfWalls();
         }
+        MortJoueur();
         showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level);
         //castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);

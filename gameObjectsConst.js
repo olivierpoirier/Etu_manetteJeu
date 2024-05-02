@@ -63,37 +63,55 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
     
             scoretext.visible = true;
             scoretext.text = `Score : ${playerScore}`
+        }else {
+            menuBackground.visible = true;
+            menuLineLeft.visible = true;
+            menuLineRight.visible = true;
+            menuLineTop.visible = true;
+            menuLineBottom.visible = true;
+            level1Icon.visible = true;
+            level2Icon.visible = true;
+            level3Icon.visible = true;
+            level4Icon.visible = true;
+            level5Icon.visible = true;
+            lockedLevel2Icon.visible = true;
+            lockedLevel3Icon.visible = true;
+            lockedLevel4Icon.visible = true;
+            lockedLevel5Icon.visible = true;
+            titleChooseLevel.visible = true;
+            level1text.visible = true;
+            level2text.visible = true;
+            level3text.visible = true;
+            level4text.visible = true;
+            level5text.visible = true;
+            firstLevelSquare.visible = true;
+            secondLevelSquare.visible = true;
+            thirdLevelSquare.visible = true;
+            fourthLevelSquare.visible = true;
+            fifthLevelSquare.visible = true;
+    
         }
     } catch(e) {
         console.error(e);
     }
 
 }
-function showOrUnlock1level() {
-
+function showOrUnlock1level(lockedIconLevel, unlockedIconLevel, isTheLevelUnlocked) {
+    if(isTheLevelUnlocked) {
+        lockedIconLevel.visible = false;
+        unlockedIconLevel.visible = true;
+    } else {
+        lockedIconLevel.visible = true;
+        unlockedIconLevel.visible = false;
+    }
 }
 export function showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked) {
     try {
         if (!isGameStarted) {
-            if(isLevel2Unlocked) {
-                lockedLevel2Icon.visible = false;
-                level2Icon.visible = true;
-            } else {
-                lockedLevel2Icon.visible = true;
-                level2Icon.visible = false;
-            }
-            if(isLevel3Unlocked) {
-                lockedLevel3Icon.visible = false;
-                level3Icon.visible = true;
-            }
-            if(isLevel4Unlocked) {
-                lockedLevel4Icon.visible = false;
-                level4Icon.visible = true;
-            }
-            if(isLevel5Unlocked) {
-                lockedLevel5Icon.visible = false;
-                level5Icon.visible = true;
-            }
+            showOrUnlock1level(lockedLevel2Icon, level2Icon, isLevel2Unlocked);
+            showOrUnlock1level(lockedLevel3Icon, level3Icon, isLevel3Unlocked);
+            showOrUnlock1level(lockedLevel4Icon, level4Icon, isLevel4Unlocked);
+            showOrUnlock1level(lockedLevel5Icon, level5Icon, isLevel5Unlocked);
         }
     } catch(e) {
         console.error(e);
@@ -297,6 +315,21 @@ level5text.position.x = fifthLevelSquareLeftCoordinateX + fifthLevelSquare.width
 level5text.position.y = fifthLevelSquareTopCoordinateY + fifthLevelSquare.height + level5text.height/4;
 
 
+//Coeurs
+const widthAndHeightOfHearts = 400;
+export const heart1 = PIXI.Sprite.from("Images/Coeur.png");
+export const heart2 = PIXI.Sprite.from("Images/Coeur.png");
+export const heart3 = PIXI.Sprite.from("Images/Coeur.png");
+heart1.width=widthAndHeightOfHearts;
+heart1.height=widthAndHeightOfHearts;
+heart2.width=widthAndHeightOfHearts;
+heart2.height=widthAndHeightOfHearts;
+heart3.width=widthAndHeightOfHearts;
+heart3.height=widthAndHeightOfHearts;
+heart1.position.set(-130, -130);  
+heart2.position.set(-60, -130);  
+heart3.position.set(10, -130); 
+
 underLayer.addChild(backgroundLevel2);
 ultraTopLayer.addChild(backgroundLevel3);
 underLayer.addChild(backgroundLevel4);
@@ -327,4 +360,6 @@ middleLayer.addChild(level2text);
 middleLayer.addChild(level3text);
 middleLayer.addChild(level4text);
 middleLayer.addChild(level5text);
-
+middleLayer.addChild(heart1);
+middleLayer.addChild(heart2);
+middleLayer.addChild(heart3);

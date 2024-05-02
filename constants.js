@@ -1,5 +1,5 @@
 
-export const textureWallAndPlayer = await PIXI.Assets.load('Images/square.png');
+await PIXI.Assets.load('Images/square.png');
 await PIXI.Assets.load('Images/Grotte.png');
 await PIXI.Assets.load('Images/maquette.png');
 await PIXI.Assets.load('Images/LargeSpace.png');
@@ -16,7 +16,10 @@ await PIXI.Assets.load('Images/Alien6.png');
 await PIXI.Assets.load('Images/Alien7.png');
 await PIXI.Assets.load('Images/Alien8.png');
 await PIXI.Assets.load('Images/lock.png');
-export const textureMineur = await PIXI.Assets.load('Images/mineur-1.png');
+await PIXI.Assets.load('Images/Coeur.png');
+await PIXI.Assets.load('Images/metoirite.png');
+await PIXI.Assets.load('Images/Flamme.png');
+
 export const app = new PIXI.Application();
 export const gameWidth = 1000;
 export const gameHeight = 500;

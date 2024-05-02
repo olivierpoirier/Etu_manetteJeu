@@ -12,7 +12,7 @@ import { player } from "./player.js";
 
 let level = 0;
 
-function verifyIfPlayerEnterALevelSpace(isGameStarted, XLevelCoordinate, YLevelCoordinate, levelNumber, background, textColor, audioPath, isLevelUnlocked ) {
+function verifyIfPlayerEnterALevelSpace(isGameStarted, XLevelCoordinate, YLevelCoordinate, levelNumber, background, textColor, audioPath, isLevelUnlocked) {
     
     try {
         if(isLevelUnlocked) {

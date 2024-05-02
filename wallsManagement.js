@@ -2,6 +2,7 @@ import { gameWidth, gameHeight } from "./constants.js";
 import { player, speedOfPlayer } from "./player.js";
 import { underLayer } from "./gameLayers.js";
 import { Wall } from "./wall.js";
+import { mortImpact } from "./Death.js";
 
 let wallSprites = [];
 let speedOfWalls = 5;
@@ -12,6 +13,7 @@ let changedAtStart = false;
 const normalWallType = "NORMAL";
 const ghostWallType = "GHOST";
 const alienWallType = "ALIEN";
+const DangerWallType = "DANGER";
 
 export function increaseDifficultyOfWalls() {
     try {
@@ -84,6 +86,28 @@ function spawnAlienWall() {
     return wallSprite;
 } 
 
+function spawnDanger(){
+    const minImage = 1
+    const maxImage = 2
+    const randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
+    
+    let wallSprite;
+    try {
+        if(randomInt === 1){
+            wallSprite = new Wall('Images/Flamme.png', false, false, DangerWallType);
+        }else if(randomInt === 2){
+            wallSprite = new Wall('Images/metoirite.png', false, false, DangerWallType);
+        }else {
+            console.error("Error when spawning danger");
+        }
+        
+    } catch (e) {
+        console.error(e);
+    }
+    return wallSprite;
+    
+}
+
 function spawnChangingNumber() {
     const textStyle = new PIXI.TextStyle({
         fontFamily: "Verdana",
@@ -106,16 +130,19 @@ function spawnWall(level) {
     try {
         
         let wallSprite;
-        console.log("spawn")
-        if (level === 3) {
+        
+        if(level === 2){
+            wallSprite = spawnDanger(wallSprite);
+            console.log("Spawn Danger");
+        } else if (level === 3) {
             wallSprite = spawnGhostWall();
             console.log("Spawn Ghost");
         } else if (level === 4){
             wallSprite = spawnAlienWall();
-   
+            console.log("Spawn Alien");
         } else if (level === 5) {
             let minImage = 1
-            let maxImage = 3
+            let maxImage = 4
             let randomInt = Math.floor(Math.random() * (maxImage - minImage + 1)) + minImage
             if(randomInt === 1) {
                 wallSprite = new Wall('Images/square.png', false, false, normalWallType);
@@ -123,8 +150,10 @@ function spawnWall(level) {
                 wallSprite = spawnGhostWall(wallSprite);
             } else if(randomInt === 3) {
                 wallSprite = spawnAlienWall(wallSprite);
+            } else if(randomInt === 4) {
+                wallSprite = spawnDanger(wallSprite);
             }else {
-                console.log("error");
+                console.error("Error when spawning wall at level 5");
             }
         } else {
             wallSprite = new Wall('Images/square.png', false, false, normalWallType);
@@ -219,6 +248,9 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                     isTouchedByWallByBottom = true;
                     if(player.y - speedOfWalls > 0){
                         player.y -= speedOfWalls;
+                        if(wall.wallType === "DANGER") {
+                            mortImpact(true)
+                        }
                     }
                 }
         
@@ -226,6 +258,9 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                     isTouchedByWallByTop = true;
                     if(player.y + player.height + speedOfWalls < gameHeight){
                         player.y += speedOfWalls;
+                        if(wall.wallType === "DANGER") {
+                            mortImpact(true)
+                        }
                     }
                 }
         
@@ -233,12 +268,18 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                 if (player.x + player.width > wall.sprite.x - speedOfPlayer && player.x <= wall.sprite.x  && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
                     isTouchedByWallByRight = true;
                     player.x -= speedOfWalls;
+                    if(wall.wallType === "DANGER") {
+                        mortImpact(true)
+                    }
                 }
                 
                 if (player.x < wall.sprite.x + wall.sprite.width + speedOfPlayer && player.x >= wall.sprite.x + wall.sprite.width && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
                     isTouchedByWallByLeft = true;
                     if(player.x + player.width + speedOfWalls < gameWidth){
                         player.x += speedOfWalls;
+                        if(wall.wallType === "DANGER") {
+                            mortImpact(true)
+                        }
                     }
                 }
             }

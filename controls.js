@@ -1,4 +1,4 @@
-import { gameHeight, textureMineur} from "./constants.js";
+import { gameHeight} from "./constants.js";
 import { player, speedOfPlayer } from "./player.js";
 
 let keys = {};
