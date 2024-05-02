@@ -1,5 +1,7 @@
 import { gameWidth, gameHeight} from "./constants.js";
 import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
+import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
+import {playerScore} from ".jeuSepare.html"
 
 const menuLeftCoordinateX = gameWidth*0.20;
 const menuRightCoordinateX = gameWidth*0.80;
@@ -58,6 +60,29 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
 
         scoretext.visible = true;
         scoretext.text = `Score : ${playerScore}`
+    } if (playerScore <= 0){
+        menuBackground.visible = true;
+        menuLineLeft.visible = true;
+        menuLineRight.visible = true;
+        menuLineTop.visible = true;
+        menuLineBottom.visible = true;
+        level1Icon.visible = true;
+        level2Icon.visible = true;
+        level3Icon.visible = true;
+        level4Icon.visible = true;
+        level5Icon.visible = true;
+        titleChooseLevel.visible = true;
+        level1text.visible = true;
+        level2text.visible = true;
+        level3text.visible = true;
+        level4text.visible = true;
+        level5text.visible = true;
+        firstLevelSquare.visible = true;
+        secondLevelSquare.visible = true;
+        thirdLevelSquare.visible = true;
+        fourthLevelSquare.visible = true;
+        fifthLevelSquare.visible = true;
+
     }
 }
 
