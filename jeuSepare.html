@@ -16,21 +16,27 @@
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
       import { verifyIfGameStart }   from "./startGame.js";
-      import { hideOrShowObjectsWhenGameStart } from "./gameObjectsConst.js";
+      import { hideOrShowObjectsWhenGameStart, showUnlockedLevels } from "./gameObjectsConst.js";
       import { castControlManagement } from "./receiver/controllReceiver.js";
 
       let playerScore = 0;
       let isGameStarted = false;
       let level = 0;
-      
-
-
+      let isLevel2Unlocked = false;
+      let isLevel3Unlocked = false;
+      let isLevel4Unlocked = false;
+      let isLevel5Unlocked = false;
+      const scoreToUnlockLevel2 = 5000;
+      const scoreToUnlockLevel3 = 10000;
+      const scoreToUnlockLevel4 = 20000;
+      const scoreToUnlockLevel5 = 25000;
 
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
       document.body.appendChild(app.canvas);
       // Add a ticker callback to move the sprite back and forth
       let elapsed = 0.0;
       app.ticker.add((ticker) => {
+        
         let isTouchedByWallByTop = false;
         let isTouchedByWallByLeft = false;
         let isTouchedByWallByBottom = false; 
@@ -43,20 +49,22 @@
 
 
         if(!isGameStarted) {
-          [isGameStarted, level] = verifyIfGameStart(isGameStarted);
+          [isGameStarted, level] = verifyIfGameStart(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         }
 
 
+
         //console.log(gameStartedAndLevelResponse);
-        timerBeforeSpawningWall(isGameStarted, level);
+        timerBeforeSpawningWall(isGameStarted);
         //console.log(level);
         if (isGameStarted) {
           hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
           elapsed += ticker.deltaTime;
           increaseDifficultyOfWalls();
         }
-        //movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
-        castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
+        showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
+        movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level);
+        //castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
         
       });
     </script>

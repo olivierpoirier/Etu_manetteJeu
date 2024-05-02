@@ -45,6 +45,10 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
             level3Icon.visible = false;
             level4Icon.visible = false;
             level5Icon.visible = false;
+            lockedLevel2Icon.visible = false;
+            lockedLevel3Icon.visible = false;
+            lockedLevel4Icon.visible = false;
+            lockedLevel5Icon.visible = false;
             titleChooseLevel.visible = false;
             level1text.visible = false;
             level2text.visible = false;
@@ -59,6 +63,37 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
     
             scoretext.visible = true;
             scoretext.text = `Score : ${playerScore}`
+        }
+    } catch(e) {
+        console.error(e);
+    }
+
+}
+function showOrUnlock1level() {
+
+}
+export function showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked) {
+    try {
+        if (!isGameStarted) {
+            if(isLevel2Unlocked) {
+                lockedLevel2Icon.visible = false;
+                level2Icon.visible = true;
+            } else {
+                lockedLevel2Icon.visible = true;
+                level2Icon.visible = false;
+            }
+            if(isLevel3Unlocked) {
+                lockedLevel3Icon.visible = false;
+                level3Icon.visible = true;
+            }
+            if(isLevel4Unlocked) {
+                lockedLevel4Icon.visible = false;
+                level4Icon.visible = true;
+            }
+            if(isLevel5Unlocked) {
+                lockedLevel5Icon.visible = false;
+                level5Icon.visible = true;
+            }
         }
     } catch(e) {
         console.error(e);
@@ -142,6 +177,31 @@ level5Icon.x = fifthLevelSquareLeftCoordinateX + levelMinWidth/2;
 level5Icon.y = fifthLevelSquareTopCoordinateY + levelMinHeight/2;
 level5Icon.width = levelMaxWidth - levelMinWidth;
 level5Icon.height = levelMaxHeight - levelMinHeight;
+
+const lockedIcon = 'Images/lock.png';
+const lockedLevel2Icon = PIXI.Sprite.from(lockedIcon);
+lockedLevel2Icon.x = secondLevelSquareLeftCoordinateX + levelMinWidth/2;
+lockedLevel2Icon.y = secondLevelSquareTopCoordinateY + levelMinHeight/2;
+lockedLevel2Icon.width = levelMaxWidth - levelMinWidth;
+lockedLevel2Icon.height = levelMaxHeight - levelMinHeight;
+
+const lockedLevel3Icon = PIXI.Sprite.from(lockedIcon);
+lockedLevel3Icon.x = thirdLevelSquareLeftCoordinateX + levelMinWidth/2;
+lockedLevel3Icon.y = thirdLevelSquareTopCoordinateY + levelMinHeight/2;
+lockedLevel3Icon.width = levelMaxWidth - levelMinWidth;
+lockedLevel3Icon.height = levelMaxHeight - levelMinHeight;
+
+const lockedLevel4Icon = PIXI.Sprite.from(lockedIcon);
+lockedLevel4Icon.x = fourthLevelSquareLeftCoordinateX + levelMinWidth/2;
+lockedLevel4Icon.y = fourthLevelSquareTopCoordinateY + levelMinHeight/2;
+lockedLevel4Icon.width = levelMaxWidth - levelMinWidth;
+lockedLevel4Icon.height = levelMaxHeight - levelMinHeight;
+
+const lockedLevel5Icon = PIXI.Sprite.from(lockedIcon);
+lockedLevel5Icon.x = fifthLevelSquareLeftCoordinateX + levelMinWidth/2;
+lockedLevel5Icon.y = fifthLevelSquareTopCoordinateY + levelMinHeight/2;
+lockedLevel5Icon.width = levelMaxWidth - levelMinWidth;
+lockedLevel5Icon.height = levelMaxHeight - levelMinHeight;
 
 
 //Constants of backgrounds : 
@@ -258,6 +318,10 @@ middleLayer.addChild(level2Icon);
 middleLayer.addChild(level3Icon);
 middleLayer.addChild(level4Icon);
 middleLayer.addChild(level5Icon);
+middleLayer.addChild(lockedLevel2Icon);
+middleLayer.addChild(lockedLevel3Icon);
+middleLayer.addChild(lockedLevel4Icon);
+middleLayer.addChild(lockedLevel5Icon);
 middleLayer.addChild(level1text);
 middleLayer.addChild(level2text);
 middleLayer.addChild(level3text);

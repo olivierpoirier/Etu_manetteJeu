@@ -106,6 +106,7 @@ function spawnWall(level) {
     try {
         
         let wallSprite;
+        console.log("spawn")
         if (level === 3) {
             wallSprite = spawnGhostWall();
             console.log("Spawn Ghost");
@@ -147,6 +148,7 @@ function spawnWall(level) {
 
 export function timerBeforeSpawningWall(isGameStarted, level) {
     try {
+        
         if (!isWallSpawning) {
             if(!isGameStarted) {
             
@@ -180,7 +182,6 @@ export function removeWallFromGame(isGameStarted, wall, playerScore, level) {
         if(wall.sprite.x + wall.sprite.width < 0) {
             underLayer.removeChild(wall.sprite);
             wallSprites.shift(wall);
-            //console.log(wallSprites.length);
             if(isGameStarted) {
                 comptorHowManyWallsDied += 1;
                 if(level === 1) {
