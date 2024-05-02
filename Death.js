@@ -20,7 +20,7 @@ export function MortJoueur() {
       topLayer.removeChild(player);
       console.log("Joueur mort");
       //alert("JOUEUR MORT !")
-      lifeplayer = lifeplayer - 1;
+      lifeplayer -= 1;
       console.log(lifeplayer)
       if (lifeplayer <= 0) {
         gameOver();
@@ -40,7 +40,7 @@ export function MortJoueur() {
 
 
  export function mortImpact(mortoupas){
-    if(mortoupas === true){
+    if(mortoupas){
         topLayer.removeChild(player);
         console.log("Joueur mort");
         lifeplayer = lifeplayer - 1;
