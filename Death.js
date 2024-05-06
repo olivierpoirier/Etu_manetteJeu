@@ -24,14 +24,11 @@ export function MortJoueur() {
       lifeplayer -= 1;
       console.log("Vie du joueurs : "+lifeplayer)
       showHearts(lifeplayer)
-      if (lifeplayer <= 0) {
-        gameOver();
-      } else {
-        restartGame();
-      }
+      restartGame();
+     
     }
-  
   }
+  
 
 export function showHearts(lifeplayer) {
     if(lifeplayer == 0){
@@ -55,11 +52,6 @@ export function showHearts(lifeplayer) {
       heart3.visible = true;
     }
 }
-
-
-  export function gameOver() {
-    
-  }
 
 
  export function mortImpact(mortoupas){

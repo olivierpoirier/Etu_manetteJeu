@@ -32,38 +32,9 @@ const levelMinWidth = gameWidth*0.005;
 const levelMinHeight = gameWidth*0.005;
 
 
-export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
+export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore, isPlayerDead) {
     try {
-        if (isGameStarted) {
-            menuBackground.visible = false;
-            menuLineLeft.visible = false;
-            menuLineRight.visible = false;
-            menuLineTop.visible = false;
-            menuLineBottom.visible = false;
-            level1Icon.visible = false;
-            level2Icon.visible = false;
-            level3Icon.visible = false;
-            level4Icon.visible = false;
-            level5Icon.visible = false;
-            lockedLevel2Icon.visible = false;
-            lockedLevel3Icon.visible = false;
-            lockedLevel4Icon.visible = false;
-            lockedLevel5Icon.visible = false;
-            titleChooseLevel.visible = false;
-            level1text.visible = false;
-            level2text.visible = false;
-            level3text.visible = false;
-            level4text.visible = false;
-            level5text.visible = false;
-            firstLevelSquare.visible = false;
-            secondLevelSquare.visible = false;
-            thirdLevelSquare.visible = false;
-            fourthLevelSquare.visible = false;
-            fifthLevelSquare.visible = false;
-    
-            scoretext.visible = true;
-            scoretext.text = `Score : ${playerScore}`
-        }else {
+        if (isPlayerDead) {  
             menuBackground.visible = true;
             menuLineLeft.visible = true;
             menuLineRight.visible = true;
@@ -89,13 +60,70 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
             thirdLevelSquare.visible = true;
             fourthLevelSquare.visible = true;
             fifthLevelSquare.visible = true;
-    
+            scoretext.visible = false;
+        } else if (isGameStarted) {
+            
+            menuBackground.visible = false;
+            menuLineLeft.visible = false;
+            menuLineRight.visible = false;
+            menuLineTop.visible = false;
+            menuLineBottom.visible = false;
+            level1Icon.visible = false;
+            level2Icon.visible = false;
+            level3Icon.visible = false;
+            level4Icon.visible = false;
+            level5Icon.visible = false;
+            lockedLevel2Icon.visible = false;
+            lockedLevel3Icon.visible = false;
+            lockedLevel4Icon.visible = false;
+            lockedLevel5Icon.visible = false;
+            titleChooseLevel.visible = false;
+            level1text.visible = false;
+            level2text.visible = false;
+            level3text.visible = false;
+            level4text.visible = false;
+            level5text.visible = false;
+            firstLevelSquare.visible = false;
+            secondLevelSquare.visible = false;
+            thirdLevelSquare.visible = false;
+            fourthLevelSquare.visible = false;
+            fifthLevelSquare.visible = false;
+            scoretext.visible = true;
+            scoretext.text = `Score : ${playerScore}`;
+        } else {
+            
+            menuBackground.visible = true;
+            menuLineLeft.visible = true;
+            menuLineRight.visible = true;
+            menuLineTop.visible = true;
+            menuLineBottom.visible = true;
+            level1Icon.visible = true;
+            level2Icon.visible = true;
+            level3Icon.visible = true;
+            level4Icon.visible = true;
+            level5Icon.visible = true;
+            lockedLevel2Icon.visible = true;
+            lockedLevel3Icon.visible = true;
+            lockedLevel4Icon.visible = true;
+            lockedLevel5Icon.visible = true;
+            titleChooseLevel.visible = true;
+            level1text.visible = true;
+            level2text.visible = true;
+            level3text.visible = true;
+            level4text.visible = true;
+            level5text.visible = true;
+            firstLevelSquare.visible = true;
+            secondLevelSquare.visible = true;
+            thirdLevelSquare.visible = true;
+            fourthLevelSquare.visible = true;
+            fifthLevelSquare.visible = true;
+            scoretext.visible = false;
         }
     } catch(e) {
         console.error(e);
     }
-
 }
+
 function showOrUnlock1level(lockedIconLevel, unlockedIconLevel, isTheLevelUnlocked) {
     if(isTheLevelUnlocked) {
         lockedIconLevel.visible = false;
@@ -117,6 +145,9 @@ export function showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlo
         console.error(e);
     }
 
+}
+export function gameOver() {
+    hideOrShowObjectsWhenGameStart(false, playerScore); 
 }
 
 // Constants of the menu : 
