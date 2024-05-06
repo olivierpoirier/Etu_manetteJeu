@@ -2,11 +2,12 @@
 import {hideOrShowObjectsWhenGameStart } from "./gameObjectsConst.js";
 import { player } from "./player.js";
 import { topLayer, middleLayer, underLayer } from "./gameLayers.js";
+import {heart1,heart2,heart3} from "./gameObjectsConst.js"
 
 import { scoretext}  from "./gameObjectsConst.js";
 let playerScore = 0;
 let isGameStarted = false;
-let lifeplayer = 3;
+export let lifeplayer = 3;
 
 export function JoueurHorsGame() {
     const positionJoueur = player.getBounds();
@@ -21,20 +22,42 @@ export function MortJoueur() {
       console.log("Joueur mort");
       //alert("JOUEUR MORT !")
       lifeplayer -= 1;
-      console.log(lifeplayer)
+      console.log("Vie du joueurs : "+lifeplayer)
+      showHearts(lifeplayer)
       if (lifeplayer <= 0) {
         gameOver();
       } else {
         restartGame();
       }
-      
-      
     }
   
   }
 
+export function showHearts(lifeplayer) {
+    if(lifeplayer == 0){
+      heart1.visible = false;
+      heart2.visible = false;
+      heart3.visible = false;
+    }
+    if (lifeplayer >= 1) {
+      heart1.visible = true;
+      heart2.visible = false;
+      heart3.visible = false;
+    }
+    if (lifeplayer >= 2) {
+      heart1.visible = true;
+      heart2.visible = true;
+      heart3.visible = false;
+    }
+    if (lifeplayer >= 3) {
+      heart1.visible = true;
+      heart2.visible = true;
+      heart3.visible = true;
+    }
+}
+
+
   export function gameOver() {
-    
     
   }
 
