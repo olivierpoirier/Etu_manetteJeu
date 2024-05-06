@@ -15,20 +15,27 @@ export function JoueurHorsGame() {
       positionJoueur.x < 0 - player.width
     );
   }
-
 export function MortJoueur() {
     if (JoueurHorsGame()) {
-      topLayer.removeChild(player);
-      console.log("Joueur mort");
-      //alert("JOUEUR MORT !")
-      lifeplayer -= 1;
-      console.log("Vie du joueurs : "+lifeplayer)
-      showHearts(lifeplayer)
-      restartGame();
-     
+        topLayer.removeChild(player);
+        console.log("Joueur mort");
+        lifeplayer -= 1;
+        console.log("Vie du joueurs : "+lifeplayer)
+        showHearts(lifeplayer)
+        if (lifeplayer <= 0) {
+            gameOver();
+        } else {
+            restartGame();
+        }
     }
-  }
-  
+}
+export function gameOver() {
+  hideOrShowObjectsWhenGameStart(false, playerScore, true);
+  activeFonctionnalite(); 
+}
+export function activeFonctionnalite() {
+
+}
 
 export function showHearts(lifeplayer) {
     if(lifeplayer == 0){
@@ -74,5 +81,5 @@ export function showHearts(lifeplayer) {
     playerScore = 0;
     isGameStarted = false;
     scoretext.text = `Score : ${playerScore}`;
-    hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
+    hideOrShowObjectsWhenGameStart(isGameStarted, playerScore,true);
   }
