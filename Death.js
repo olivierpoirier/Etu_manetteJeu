@@ -81,5 +81,5 @@ export function showHearts(lifeplayer) {
     playerScore = 0;
     isGameStarted = false;
     scoretext.text = `Score : ${playerScore}`;
-    hideOrShowObjectsWhenGameStart(isGameStarted, playerScore,true);
+    hideOrShowObjectsWhenGameStart(isGameStarted, playerScore,true); // true parce que techniquement il a toujours des points de vies
   }

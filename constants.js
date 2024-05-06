@@ -21,8 +21,8 @@ await PIXI.Assets.load('Images/metoirite.png');
 await PIXI.Assets.load('Images/Flamme.png');
 
 export const app = new PIXI.Application();
-export const gameWidth = 1000;
-export const gameHeight = 500;
+export const gameWidth = window.innerWidth;
+export const gameHeight = window.innerHeight;
 
 
 

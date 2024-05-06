@@ -38,7 +38,6 @@
 
     await app.init({ background: 'black', width: gameWidth, height: gameHeight });
     document.body.appendChild(app.canvas);
-    // Add a ticker callback to move the sprite back and forth
     let elapsed = 0.0;
     app.ticker.add((ticker) => {
 
@@ -55,20 +54,17 @@
       if (!isGameStarted) {
         [isGameStarted, level] = verifyIfGameStart(isGameStarted, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
       }
-
-
-
       //console.log(gameStartedAndLevelResponse);
       timerBeforeSpawningWall(isGameStarted, level);
       console.log(level);
       if (isGameStarted) {
-        let playerIsAlive = true; 
+        let playerIsDeath = false; 
         if (lifeplayer > 0) {
-          playerIsAlive = false; 
+          playerIsDeath = false; 
         } else {
-          playerIsAlive = true;
+          playerIsDeath = true;
         }
-        hideOrShowObjectsWhenGameStart(isGameStarted, playerScore, playerIsAlive);
+        hideOrShowObjectsWhenGameStart(isGameStarted, playerScore, playerIsDeath);
         elapsed += ticker.deltaTime;
         increaseDifficultyOfWalls();
       }

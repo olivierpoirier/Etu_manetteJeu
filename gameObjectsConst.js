@@ -147,7 +147,7 @@ export function showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlo
 
 }
 export function gameOver() {
-    hideOrShowObjectsWhenGameStart(false, playerScore); 
+    hideOrShowObjectsWhenGameStart(false, playerScore,false); 
 }
 
 // Constants of the menu : 
