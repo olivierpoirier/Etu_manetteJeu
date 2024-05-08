@@ -20,12 +20,13 @@
       import { hideOrShowObjectsWhenGameStart, showUnlockedLevels, titleChooseLevel } from "./gameObjectsConst.js";
       import { castControlManagement } from "./receiver/controllReceiver.js";
       import { MortJoueur, gameOver, unlockLevels } from "./Death.js";
+      import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
 
       let playerScore = 0;
       let isGameStarted = false;
       let level = 0;
       let isLevel2Unlocked = false;
-      let isLevel3Unlocked = false;
+      let isLevel3Unlocked = true;
       let isLevel4Unlocked = false;
       let isLevel5Unlocked = false;
       let isTouchedByWallByTop = false;
@@ -42,7 +43,19 @@
       context.addCustomMessageListener(CHANNEL, function(customEvent) {
       const pos = customEvent.data.msg.split(',');
       titleChooseLevel.text = customEvent.data.msg;
+      const textStyle = new PIXI.TextStyle({
+          fontFamily: "Verdana",
+          fontSize: 36,
+          fill: "#ffffff"
+      });
 
+      const scoretext = new PIXI.Text({
+          text:`msg : ${customEvent.data.msg}`,
+          style: textStyle
+
+      });
+      topLayer.addChild(scoretext);
+      
       
     });
 
