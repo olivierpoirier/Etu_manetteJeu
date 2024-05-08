@@ -93,4 +93,4 @@ function getWindowPosition() {
 
 }
 
-setInterval(getWindowPosition, 100)
+getWindowPosition()
