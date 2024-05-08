@@ -57,10 +57,7 @@ function getWindowPosition() {
         let whereIsGoingPlayerX;
         let whereIsGoingPlayerY;
     
-        let objPosition = {
-            whereIsGoingPlayerX: whereIsGoingPlayerX,
-            whereIsGoingPlayerY: whereIsGoingPlayerY
-        }
+
     
         if(window.screenX - window.innerWidth/2 < window.screen.availWidth*0.10){
             console.log("Sprite goes left");
@@ -84,9 +81,14 @@ function getWindowPosition() {
             console.log("Sprite don't move on y");
             whereIsGoingPlayerY = "Stays";
         } 
+
+        let objPosition = {
+            whereIsGoingPlayerX: whereIsGoingPlayerX,
+            whereIsGoingPlayerY: whereIsGoingPlayerY
+        }
         let messageToSend = JSON.stringify(objPosition);
         currentSession.sendMessage(nameSpace1, messageToSend);
-        console.log("mesage send")
+        console.log("mesage send");
     }
 
 }

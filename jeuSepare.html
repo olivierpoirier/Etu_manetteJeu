@@ -27,8 +27,8 @@
       let level = 0;
       let isLevel2Unlocked = false;
       let isLevel3Unlocked = true;
-      let isLevel4Unlocked = true;
-      let isLevel5Unlocked = false;
+      let isLevel4Unlocked = false;
+      let isLevel5Unlocked = true;
       let isTouchedByWallByTop = false;
       let isTouchedByWallByLeft = false;
       let isTouchedByWallByBottom = false; 
@@ -43,22 +43,39 @@
       context.addCustomMessageListener(CHANNEL, function(customEvent) {
       //const pos = customEvent.data.msg.split(',');
       titleChooseLevel.text = customEvent.data.whereIsGoingPlayerX;
-      topLayer.addChild(titleChooseLevel);
-      const textStyle = new PIXI.TextStyle({
-          fontFamily: "Verdana",
-          fontSize: 36,
-          fill: "#ffffff"
-      });
-
-      const scoretext = new PIXI.Text({
-          text:`msg : ${customEvent.data.whereIsGoingPlayerX}`,
-          style: textStyle
-
-      });
-      scoretext.position.x = gameWidth*0.70;
-      scoretext.position.y = gameHeight*0.05;
-      topLayer.addChild(scoretext);
-      
+      if(traductedMessage != undefined) {
+        whereIsGoingPlayerX = customEvent.data.whereIsGoingPlayerX;
+        whereIsGoingPlayerY = customEvent.data.whereIsGoingPlayerY;
+      }
+      if(player.y >= 0){
+        if(!isTouchedByWallByTop) {
+          if(keys["38"] || whereIsGoingPlayerY === "Up"){
+            player.y -= speedOfPlayer;
+          }
+        }
+      }
+      if(player.y < gameHeight - player.height){
+        if(!isTouchedByWallByBottom || whereIsGoingPlayerY === "Down") {
+          if(keys["40"]){
+            player.y += speedOfPlayer;
+          }
+        }
+      }
+      if (!isTouchedByWallByLeft || whereIsGoingPlayerX === "Left") {
+        if(keys["37"]){
+          player.x -= speedOfPlayer;
+        }
+      }
+      if (!isTouchedByWallByRight || whereIsGoingPlayerX === "Right") {
+        if(keys["39"]){
+          player.x += speedOfPlayer;
+        }
+      }
+      if(keys['80']) {
+        console.log('allo')
+        let aud = new Audio("Audio/menu.mp3");
+        aud.play();
+      }
       
     });
 
