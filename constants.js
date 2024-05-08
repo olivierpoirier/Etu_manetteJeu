@@ -4,6 +4,7 @@ await PIXI.Assets.load('Images/Grotte.png');
 await PIXI.Assets.load('Images/maquette.png');
 await PIXI.Assets.load('Images/LargeSpace.png');
 await PIXI.Assets.load('Images/level1Icon.png');
+await PIXI.Assets.load('Images/level2Icon.png');
 await PIXI.Assets.load('Images/level3Icon.png');
 await PIXI.Assets.load('Images/level4Icon.png');
 await PIXI.Assets.load('Images/Ghost.png');

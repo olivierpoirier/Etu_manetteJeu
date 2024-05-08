@@ -10,9 +10,9 @@ let whereIsGoingPlayerY;
 
 context.addCustomMessageListener(CHANNEL, handleMessageFromSender);
 
-const options = new cast.framework.CastReceiverOptions();
+//const options = new cast.framework.CastReceiverOptions();
 
-context.start(options);
+//context.start(options);
 
 let keys = {};
 let keysDiv;

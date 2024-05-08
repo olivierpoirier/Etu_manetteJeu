@@ -178,7 +178,7 @@ level1Icon.y = firstLevelSquareTopCoordinateY + levelMinHeight/2;
 level1Icon.width = levelMaxWidth - levelMinWidth;
 level1Icon.height = levelMaxHeight - levelMinHeight;
 
-const level2Icon = PIXI.Sprite.from('Images/Earth.png');
+const level2Icon = PIXI.Sprite.from('Images/level2Icon.png');
 level2Icon.x = secondLevelSquareLeftCoordinateX + levelMinWidth/2;
 level2Icon.y = secondLevelSquareTopCoordinateY + levelMinHeight/2;
 level2Icon.width = levelMaxWidth - levelMinWidth;
