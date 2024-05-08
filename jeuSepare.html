@@ -37,12 +37,13 @@
       
 
       //Chromecast
-      export const context = cast.framework.CastReceiverContext.getInstance();
+      const context = cast.framework.CastReceiverContext.getInstance();
       const CHANNEL = 'urn:x-cast:gameChannel';
 
       context.addCustomMessageListener(CHANNEL, function(customEvent) {
       //const pos = customEvent.data.msg.split(',');
       titleChooseLevel.text = customEvent.data.whereIsGoingPlayerX;
+      topLayer.addChild(titleChooseLevel);
       const textStyle = new PIXI.TextStyle({
           fontFamily: "Verdana",
           fontSize: 36,
