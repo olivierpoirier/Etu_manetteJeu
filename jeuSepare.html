@@ -17,7 +17,7 @@
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
       import { verifyIfGameStart }   from "./startAndEndGame.js";
-      import { hideOrShowObjectsWhenGameStart, showUnlockedLevels } from "./gameObjectsConst.js";
+      import { hideOrShowObjectsWhenGameStart, showUnlockedLevels, titleChooseLevel } from "./gameObjectsConst.js";
       import { castControlManagement } from "./receiver/controllReceiver.js";
       import { MortJoueur, gameOver, unlockLevels } from "./Death.js";
 
@@ -41,13 +41,8 @@
 
       context.addCustomMessageListener(CHANNEL, function(customEvent) {
       const pos = customEvent.data.msg.split(',');
-      player.x = pos[0];
-      player.y = pos[1];
-      if (burgerIsReached()) {
-        context.sendCustomMessage(CHANNEL, undefined, "test")
-        animate();
-      }
-      idleTime = 0;
+      titleChooseLevel.text = customEvent.data.msg;
+
       
     });
 

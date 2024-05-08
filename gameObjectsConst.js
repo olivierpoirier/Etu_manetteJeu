@@ -266,7 +266,7 @@ scoretext.position.x = gameWidth*0.70;
 scoretext.position.y = gameHeight*0.05;
 scoretext.visible = false;
 
-const titleChooseLevel = new PIXI.Text({
+export const titleChooseLevel = new PIXI.Text({
     text:"Go on one level icon to start",
     style: textStyle
 
