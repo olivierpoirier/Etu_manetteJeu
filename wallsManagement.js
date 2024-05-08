@@ -2,7 +2,7 @@ import { gameWidth, gameHeight } from "./constants.js";
 import { player, speedOfPlayer } from "./player.js";
 import { underLayer } from "./gameLayers.js";
 import { Wall } from "./wall.js";
-import { mortImpact } from "./Death.js";
+import { perdPV } from "./Death.js";
 
 let wallSprites = [];
 let speedOfWalls = 5;
@@ -15,13 +15,16 @@ const ghostWallType = "GHOST";
 const alienWallType = "ALIEN";
 const DangerWallType = "DANGER";
 
-export function increaseDifficultyOfWalls() {
+export function increaseDifficultyOfWalls(isGameStarted) {
     try {
-        if(comptorHowManyWallsDied >= 100) {
-            timeUntilWallSpawn -= 15;
-            speedOfWalls += 1;
-            comptorHowManyWallsDied = 0;
+        if(isGameStarted) {
+            if(comptorHowManyWallsDied >= 100) {
+                timeUntilWallSpawn -= 15;
+                speedOfWalls += 1;
+                comptorHowManyWallsDied = 0;
+            }
         }
+
     } catch(e) {
         console.error(e);
     }
@@ -174,13 +177,17 @@ function spawnWall(level) {
 
 }
 
+export function restartWalls() {
+    changedAtStart = false;
+}
 
 export function timerBeforeSpawningWall(isGameStarted, level) {
     try {
         
         if (!isWallSpawning) {
             if(!isGameStarted) {
-            
+                speedOfWalls = 5;
+                comptorHowManyWallsDied = 0;
                 timeUntilWallSpawn = Math.floor((Math.random()* 2000) + 600)
                 setTimeout(spawnWall, timeUntilWallSpawn, level);
                 
@@ -195,6 +202,7 @@ export function timerBeforeSpawningWall(isGameStarted, level) {
                     changedAtStart = true;
                 }
                 setTimeout(spawnWall, timeUntilWallSpawn, level);
+                
             }
             
             //timeUntilWallSpawn -= 25;
@@ -235,7 +243,7 @@ export function removeWallFromGame(isGameStarted, wall, playerScore, level) {
     } catch(e) {
         console.error(e);
     }
-    return playerScore
+    return playerScore;
 }
 
 export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level) {
@@ -249,7 +257,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                     if(player.y - speedOfWalls > 0){
                         player.y -= speedOfWalls;
                         if(wall.wallType === "DANGER") {
-                            mortImpact(true)
+                            perdPV(true)
                         }
                     }
                 }
@@ -259,7 +267,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                     if(player.y + player.height + speedOfWalls < gameHeight){
                         player.y += speedOfWalls;
                         if(wall.wallType === "DANGER") {
-                            mortImpact(true)
+                            perdPV(true)
                         }
                     }
                 }
@@ -269,7 +277,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                     isTouchedByWallByRight = true;
                     player.x -= speedOfWalls;
                     if(wall.wallType === "DANGER") {
-                        mortImpact(true)
+                        perdPV(true)
                     }
                 }
                 
@@ -278,7 +286,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                     if(player.x + player.width + speedOfWalls < gameWidth){
                         player.x += speedOfWalls;
                         if(wall.wallType === "DANGER") {
-                            mortImpact(true)
+                            perdPV(true)
                         }
                     }
                 }
@@ -326,7 +334,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
             
         
             playerScore = removeWallFromGame(isGameStarted, wall, playerScore, level);
-            });
+        });
         
     } catch(e) {
         console.error(e);

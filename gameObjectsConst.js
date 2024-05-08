@@ -63,7 +63,7 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
     
             scoretext.visible = true;
             scoretext.text = `Score : ${playerScore}`
-        }else {
+        } else {
             menuBackground.visible = true;
             menuLineLeft.visible = true;
             menuLineRight.visible = true;
@@ -89,6 +89,12 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
             thirdLevelSquare.visible = true;
             fourthLevelSquare.visible = true;
             fifthLevelSquare.visible = true;
+            backgroundLevel2.visible = false;
+            backgroundLevel3.visible = false;
+            backgroundLevel4.visible = false;
+            backgroundLevel5.visible = false;
+            scoretext.visible = false;
+            textStyle.fill = "0xffffff";
     
         }
     } catch(e) {
@@ -178,13 +184,13 @@ level2Icon.y = secondLevelSquareTopCoordinateY + levelMinHeight/2;
 level2Icon.width = levelMaxWidth - levelMinWidth;
 level2Icon.height = levelMaxHeight - levelMinHeight;
 
-const level3Icon = PIXI.Sprite.from('Images/Grotte.png');
+const level3Icon = PIXI.Sprite.from('Images/level3Icon.png');
 level3Icon.x = thirdLevelSquareLeftCoordinateX + levelMinWidth/2;
 level3Icon.y = thirdLevelSquareTopCoordinateY + levelMinHeight/2;
 level3Icon.width = levelMaxWidth - levelMinWidth;
 level3Icon.height = levelMaxHeight - levelMinHeight;
 
-const level4Icon = PIXI.Sprite.from('Images/LargeSpace.png');
+const level4Icon = PIXI.Sprite.from('Images/level4Icon.png');
 level4Icon.x = fourthLevelSquareLeftCoordinateX + levelMinWidth/2;
 level4Icon.y = fourthLevelSquareTopCoordinateY + levelMinHeight/2;
 level4Icon.width = levelMaxWidth - levelMinWidth;

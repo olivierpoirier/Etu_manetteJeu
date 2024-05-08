@@ -1,4 +1,4 @@
-const appId = "8713599E";
+const appId = "11BB1EAA";
 let currentSession;
 const nameSpace1 = "urn:x-cast:gameChannel";
 let isChromecastSucces = false;
@@ -22,7 +22,7 @@ function onError(error) {
 
 function initializeApiOnly() {
 
-    const sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+    const sessionRequest = new chrome.cast.SessionRequest(appId);
     const apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
     chrome.cast.initialize(apiConfig, onInitSuccess, onError);
     console.log(sessionListener.message);
@@ -52,8 +52,8 @@ function sendCommands() {
 function getWindowPosition() {
     //console.log(window.screenX)
     //console.log(window.innerWidth/2)
-    console.log(currentSession)
-    if(isChromecastSucces) {
+    //console.log(currentSession)
+    if(currentSession != undefined) {
         let whereIsGoingPlayerX;
         let whereIsGoingPlayerY;
     
@@ -86,6 +86,7 @@ function getWindowPosition() {
         } 
         let messageToSend = JSON.stringify(objPosition);
         currentSession.sendMessage(nameSpace1, messageToSend);
+        console.log("mesage send")
     }
 
 }

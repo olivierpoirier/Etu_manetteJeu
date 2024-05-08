@@ -16,10 +16,10 @@
       import { app, gameWidth, gameHeight }  from "./constants.js";
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
-      import { verifyIfGameStart }   from "./startGame.js";
+      import { verifyIfGameStart }   from "./startAndEndGame.js";
       import { hideOrShowObjectsWhenGameStart, showUnlockedLevels } from "./gameObjectsConst.js";
       import { castControlManagement } from "./receiver/controllReceiver.js";
-      import { MortJoueur } from "./Death.js";
+      import { MortJoueur, gameOver, unlockLevels } from "./Death.js";
 
       let playerScore = 0;
       let isGameStarted = false;
@@ -28,17 +28,16 @@
       let isLevel3Unlocked = false;
       let isLevel4Unlocked = false;
       let isLevel5Unlocked = false;
-      const scoreToUnlockLevel2 = 5000;
-      const scoreToUnlockLevel3 = 10000;
-      const scoreToUnlockLevel4 = 20000;
-      const scoreToUnlockLevel5 = 25000;
+      let isPlayerDead = false;
+      
+
 
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
       document.body.appendChild(app.canvas);
       // Add a ticker callback to move the sprite back and forth
       let elapsed = 0.0;
       app.ticker.add((ticker) => {
-        
+        elapsed += ticker.deltaTime;
         let isTouchedByWallByTop = false;
         let isTouchedByWallByLeft = false;
         let isTouchedByWallByBottom = false; 
@@ -48,26 +47,18 @@
         isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level);
         playerScore = isTouchedResponse[4];
 
-
-        if(!isGameStarted) {
-          [isGameStarted, level] = verifyIfGameStart(isGameStarted, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
-        }
-
-
-
-        //console.log(gameStartedAndLevelResponse);
+        [isGameStarted, level] = verifyIfGameStart(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         timerBeforeSpawningWall(isGameStarted, level);
-        //console.log(level);
-        if (isGameStarted) {
-          hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
-          elapsed += ticker.deltaTime;
-          increaseDifficultyOfWalls();
-        }
+        increaseDifficultyOfWalls();
         MortJoueur();
-        showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
+        [isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked] = unlockLevels(playerScore, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
+        [isGameStarted, isPlayerDead, level, playerScore] = gameOver(isGameStarted, isPlayerDead, level, playerScore);
         movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level);
         //castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
-        
+        hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
+        showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
+
+
       });
     </script>
     <script src="./wallsManagement.js" type="module/javascript"></script>
