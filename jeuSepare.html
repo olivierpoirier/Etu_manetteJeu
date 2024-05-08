@@ -28,8 +28,36 @@
       let isLevel3Unlocked = false;
       let isLevel4Unlocked = false;
       let isLevel5Unlocked = false;
+      let isTouchedByWallByTop = false;
+      let isTouchedByWallByLeft = false;
+      let isTouchedByWallByBottom = false; 
+      let isTouchedByWallByRight = false;
       let isPlayerDead = false;
       
+
+      //Chromecast
+      export const context = cast.framework.CastReceiverContext.getInstance();
+      const CHANNEL = 'urn:x-cast:gameChannel';
+
+      context.addCustomMessageListener(CHANNEL, function(customEvent) {
+      const pos = customEvent.data.msg.split(',');
+      player.x = pos[0];
+      player.y = pos[1];
+      if (burgerIsReached()) {
+        context.sendCustomMessage(CHANNEL, undefined, "test")
+        animate();
+      }
+      idleTime = 0;
+      
+    });
+
+      const options = new cast.framework.CastReceiverOptions();
+
+      options.customNamespaces = Object.assign({});
+      options.customNamespaces[CHANNEL] = cast.framework.system.MessageType.JSON;
+      options.disableIdleTimeout = true;
+
+      context.start(options);
 
 
       await app.init({ background: 'black', width: gameWidth, height: gameHeight });
@@ -38,10 +66,10 @@
       let elapsed = 0.0;
       app.ticker.add((ticker) => {
         elapsed += ticker.deltaTime;
-        let isTouchedByWallByTop = false;
-        let isTouchedByWallByLeft = false;
-        let isTouchedByWallByBottom = false; 
-        let isTouchedByWallByRight = false;
+        isTouchedByWallByTop = false;
+        isTouchedByWallByLeft = false;
+        isTouchedByWallByBottom = false; 
+        isTouchedByWallByRight = false;
         let isTouchedResponse = []
         let gameStartedAndLevelResponse = []
         isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level);
@@ -53,8 +81,8 @@
         MortJoueur();
         [isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked] = unlockLevels(playerScore, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         [isGameStarted, isPlayerDead, level, playerScore] = gameOver(isGameStarted, isPlayerDead, level, playerScore);
-        movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level);
-        //castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
+        //movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level);
+        castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
         hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
         showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
 

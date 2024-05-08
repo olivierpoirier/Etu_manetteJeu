@@ -1,18 +1,15 @@
 import { gameHeight } from "../constants.js";
 import { player, speedOfPlayer } from "../player.js";
 
-const context = cast.framework.CastReceiverContext.getInstance();
-const CHANNEL = 'urn:x-cast:gameChannel';
+
+
 
 let traductedMessage;
 let whereIsGoingPlayerX;
 let whereIsGoingPlayerY;
 
-context.addCustomMessageListener(CHANNEL, handleMessageFromSender);
 
-//const options = new cast.framework.CastReceiverOptions();
 
-//context.start(options);
 
 let keys = {};
 let keysDiv;
@@ -67,6 +64,7 @@ export function castControlManagement(isTouchedByWallByTop, isTouchedByWallByLef
       aud.play();
     }
   }
+
 
   window.addEventListener("keydown", keyDown);
   window.addEventListener("keyup", keyUp);
