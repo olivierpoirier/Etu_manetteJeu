@@ -24,9 +24,9 @@ export function JoueurHorsGame() {
 
 export function MortJoueur() {
     if (JoueurHorsGame()) {
+      perdPV(true);
       console.log("Joueur mort");
-      lifeplayer -= 1;
-      console.log("Vie du joueurs : "+lifeplayer)
+      console.log("Vie du joueurs : "+lifeplayer) 
       showHearts(lifeplayer);
     }
   
@@ -60,6 +60,7 @@ export function MortJoueur() {
     if ((lifeplayer <= 0 || JoueurHorsGame()) && isGameStarted ) {
       lifeplayer = 3
       playerScore = 0;
+      showHearts(lifeplayer)
       isGameStarted = false;
       isPlayerDead = true;
       player.x = gameWidth*0.10;
