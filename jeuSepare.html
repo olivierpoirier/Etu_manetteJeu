@@ -42,31 +42,27 @@
 
       context.addCustomMessageListener(CHANNEL, function(customEvent) {
       //const pos = customEvent.data.msg.split(',');
-      titleChooseLevel.text = customEvent.data.whereIsGoingPlayerX;
-      if(traductedMessage != undefined) {
-        whereIsGoingPlayerX = customEvent.data.whereIsGoingPlayerX;
-        whereIsGoingPlayerY = customEvent.data.whereIsGoingPlayerY;
-      }
+      //titleChooseLevel.text = customEvent.data.whereIsGoingPlayerX;
       if(player.y >= 0){
         if(!isTouchedByWallByTop) {
-          if(keys["38"] || whereIsGoingPlayerY === "Up"){
+          if(keys["38"] || customEvent.data.whereIsGoingPlayerY === "Up"){
             player.y -= speedOfPlayer;
           }
         }
       }
       if(player.y < gameHeight - player.height){
-        if(!isTouchedByWallByBottom || whereIsGoingPlayerY === "Down") {
+        if(!isTouchedByWallByBottom || customEvent.data.whereIsGoingPlayerY === "Down") {
           if(keys["40"]){
             player.y += speedOfPlayer;
           }
         }
       }
-      if (!isTouchedByWallByLeft || whereIsGoingPlayerX === "Left") {
+      if (!isTouchedByWallByLeft || customEvent.data.whereIsGoingPlayerX === "Left") {
         if(keys["37"]){
           player.x -= speedOfPlayer;
         }
       }
-      if (!isTouchedByWallByRight || whereIsGoingPlayerX === "Right") {
+      if (!isTouchedByWallByRight || customEvent.data.whereIsGoingPlayerX === "Right") {
         if(keys["39"]){
           player.x += speedOfPlayer;
         }
