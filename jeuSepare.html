@@ -41,8 +41,8 @@
       const CHANNEL = 'urn:x-cast:gameChannel';
 
       context.addCustomMessageListener(CHANNEL, function(customEvent) {
-      const pos = customEvent.data.msg.split(',');
-      titleChooseLevel.text = customEvent.data.msg;
+      //const pos = customEvent.data.msg.split(',');
+      titleChooseLevel.text = customEvent.data.whereIsGoingPlayerX;
       const textStyle = new PIXI.TextStyle({
           fontFamily: "Verdana",
           fontSize: 36,
@@ -50,7 +50,7 @@
       });
 
       const scoretext = new PIXI.Text({
-          text:`msg : ${customEvent.data.msg}`,
+          text:`msg : ${customEvent.data.whereIsGoingPlayerX}`,
           style: textStyle
 
       });
