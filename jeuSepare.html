@@ -55,19 +55,19 @@
         }
       }
       if(player.y < gameHeight - player.height){
-        if(!isTouchedByWallByBottom || customEvent.data.whereIsGoingPlayerY === "Down") {
-          if(keys["40"]){
+        if(!isTouchedByWallByBottom) {
+          if(keys["40"] || customEvent.data.whereIsGoingPlayerY === "Down"){
             player.y += speedOfPlayer;
           }
         }
       }
-      if (!isTouchedByWallByLeft || customEvent.data.whereIsGoingPlayerX === "Left") {
-        if(keys["37"]){
+      if (!isTouchedByWallByLeft) {
+        if(keys["37"] || customEvent.data.whereIsGoingPlayerX === "Left"){
           player.x -= speedOfPlayer;
         }
       }
-      if (!isTouchedByWallByRight || customEvent.data.whereIsGoingPlayerX === "Right") {
-        if(keys["39"]){
+      if (!isTouchedByWallByRight) {
+        if(keys["39"] || customEvent.data.whereIsGoingPlayerX === "Right"){
           player.x += speedOfPlayer;
         }
       }
