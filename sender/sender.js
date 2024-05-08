@@ -59,10 +59,10 @@ function getWindowPosition() {
     
 
     
-        if(window.screenX - window.innerWidth/2 < window.screen.availWidth*0.10){
+        if(window.screenX - window.innerWidth/2 < window.screen.availWidth*0.05){
             console.log("Sprite goes left");
             whereIsGoingPlayerX = "Left";
-        } else if(window.screenX + window.innerWidth/2 > window.screen.availWidth*0.40){
+        } else if(window.screenX + window.innerWidth/2 > window.screen.availWidth*0.60){
             console.log("Sprite goes right");
             whereIsGoingPlayerX = "Right";
         } else {
@@ -93,4 +93,4 @@ function getWindowPosition() {
 
 }
 
-getWindowPosition()
+setInterval(getWindowPosition, 15)
