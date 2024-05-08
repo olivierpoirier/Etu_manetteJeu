@@ -275,7 +275,7 @@ export const titleChooseLevel = new PIXI.Text({
 titleChooseLevel.position.x = gameWidth*0.50 - titleChooseLevel.width/2;
 titleChooseLevel.position.y = gameHeight*0.10 - titleChooseLevel.height/2;
 
-const level1text = new PIXI.Text({
+export const level1text = new PIXI.Text({
     text:"1",
     style: textStyle
 
