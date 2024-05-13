@@ -109,6 +109,11 @@
         let isTouchedResponse = []
         let gameStartedAndLevelResponse = []
         isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level);
+        isTouchedByWallByTop = isTouchedResponse[0];
+        isTouchedByWallByLeft = isTouchedResponse[1];
+        isTouchedByWallByBottom = isTouchedResponse[2];
+        isTouchedByWallByRight = isTouchedResponse[3];
+        
         playerScore = isTouchedResponse[4];
 
         [isGameStarted, level] = verifyIfGameStart(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
