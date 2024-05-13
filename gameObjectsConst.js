@@ -229,7 +229,7 @@ lockedLevel5Icon.height = levelMaxHeight - levelMinHeight;
 
 
 //Constants of backgrounds : 
-export const backgroundLevel2 = PIXI.Sprite.from('Images/Earth.png');
+export const backgroundLevel2 = PIXI.Sprite.from('Images/Volcan.png');
 backgroundLevel2.width = gameWidth;
 backgroundLevel2.height = gameHeight;
 backgroundLevel2.visible = false;
