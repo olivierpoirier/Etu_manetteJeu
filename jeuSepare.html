@@ -18,7 +18,7 @@
       import { movementControl }  from "./controls.js";
       import { verifyIfGameStart }   from "./startAndEndGame.js";
       import { hideOrShowObjectsWhenGameStart, showUnlockedLevels, titleChooseLevel, level1text } from "./gameObjectsConst.js";
-      import { castControlManagement } from "./receiver/controllReceiver.js";
+      //import { castControlManagement } from "./receiver/controllReceiver.js";
       import { MortJoueur, gameOver, unlockLevels } from "./Death.js";
       import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
       import { player, speedOfPlayer } from "./player.js";
@@ -39,7 +39,7 @@
       let keysDiv;
       
 
-      //Chromecast
+      //Chromecast receiver
       const context = cast.framework.CastReceiverContext.getInstance();
       const CHANNEL = 'urn:x-cast:gameChannel';
 
@@ -110,7 +110,7 @@
         [isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked] = unlockLevels(playerScore, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         [isGameStarted, isPlayerDead, level, playerScore] = gameOver(isGameStarted, isPlayerDead, level, playerScore);
         //movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level);
-        castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
+        //castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
         hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
         showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
 
