@@ -62,13 +62,17 @@
         }
       }
       if (!isTouchedByWallByLeft) {
-        if(keys["37"] || customEvent.data.whereIsGoingPlayerX === "Left"){
-          player.x -= speedOfPlayer;
+        if (isGameStarted) {
+          if(keys["37"] || customEvent.data.whereIsGoingPlayerX === "Left"){
+            player.x -= speedOfPlayer;
+          }
         }
       }
       if (!isTouchedByWallByRight) {
         if(keys["39"] || customEvent.data.whereIsGoingPlayerX === "Right"){
-          player.x += speedOfPlayer;
+          if(player.x + player.width +speedOfPlayer <= gameWidth) {
+            player.x += speedOfPlayer;
+          }
         }
       }
       if(keys['80']) {
