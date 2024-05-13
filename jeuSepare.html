@@ -26,10 +26,10 @@
       let playerScore = 0;
       let isGameStarted = false;
       let level = 0;
-      let isLevel2Unlocked = true;
-      let isLevel3Unlocked = true;
-      let isLevel4Unlocked = true;
-      let isLevel5Unlocked = true;
+      let isLevel2Unlocked = false;
+      let isLevel3Unlocked = false;
+      let isLevel4Unlocked = false;
+      let isLevel5Unlocked = false;
       let isTouchedByWallByTop = false;
       let isTouchedByWallByLeft = false;
       let isTouchedByWallByBottom = false; 
@@ -61,19 +61,23 @@
           }
         }
       }
-      if (!isTouchedByWallByLeft) {
-        if (isGameStarted) {
+      if (player.x + speedOfPlayer > 0) {
+        if (!isTouchedByWallByLeft) {
+        
           if(keys["37"] || customEvent.data.whereIsGoingPlayerX === "Left"){
             player.x -= speedOfPlayer;
           }
+        
         }
       }
+      if(player.x < gameWidth - player.width){
       if (!isTouchedByWallByRight) {
         if(keys["39"] || customEvent.data.whereIsGoingPlayerX === "Right"){
-          if(player.x + player.width +speedOfPlayer <= gameWidth) {
-            player.x += speedOfPlayer;
-          }
+          
+          player.x += speedOfPlayer;
         }
+        
+      }
       }
       if(keys['80']) {
         console.log('allo')
@@ -113,7 +117,7 @@
         MortJoueur();
         [isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked] = unlockLevels(playerScore, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         [isGameStarted, isPlayerDead, level, playerScore] = gameOver(isGameStarted, isPlayerDead, level, playerScore);
-        //movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level);
+        movementControl(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3], level, isGameStarted);
         //castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
         hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
         showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);

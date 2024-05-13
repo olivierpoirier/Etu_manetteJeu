@@ -1,4 +1,4 @@
-import { gameHeight} from "./constants.js";
+import { gameHeight, gameWidth} from "./constants.js";
 import { player, speedOfPlayer } from "./player.js";
 
 let keys = {};
@@ -25,7 +25,7 @@ function keyUp(e) {
 
 
 
-export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, level) {
+export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, level, isGameStarted) {
   let isMoving = false;
   try {
     if(player.y >= 0){
@@ -44,16 +44,21 @@ export function movementControl(isTouchedByWallByTop, isTouchedByWallByLeft, isT
         }
       }
     }
-    if (!isTouchedByWallByLeft) {
-      if(keys["37"]){
-        player.x -= speedOfPlayer;
-        isMoving = true;
+
+    if (player.x + speedOfPlayer > 0) {
+      if (!isTouchedByWallByLeft) {
+        if(keys["37"]){
+          player.x -= speedOfPlayer;
+          isMoving = true;
+        }
       }
     }
-    if (!isTouchedByWallByRight) {
-      if(keys["39"]){
-        player.x += speedOfPlayer;
-        isMoving = true;
+    if(player.x < gameWidth - player.width){
+      if (!isTouchedByWallByRight) {
+        if(keys["39"]){
+          player.x += speedOfPlayer;
+          isMoving = true;
+        }
       }
     }
     if(keys['80']) {
