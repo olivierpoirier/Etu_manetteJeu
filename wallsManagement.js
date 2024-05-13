@@ -238,6 +238,7 @@ export function removeWallFromGame(isGameStarted, wall, playerScore, level) {
                 } else {
                     playerScore += 0;
                 }   
+                console.log(comptorHowManyWallsDied)
             }
         }
     } catch(e) {
