@@ -19,17 +19,17 @@
       import { verifyIfGameStart }   from "./startAndEndGame.js";
       import { hideOrShowObjectsWhenGameStart, showUnlockedLevels, titleChooseLevel, level1text } from "./gameObjectsConst.js";
       //import { castControlManagement } from "./receiver/controllReceiver.js";
-      import { MortJoueur, gameOver, unlockLevels } from "./Death.js";
+      import { MortJoueur, gameOver, unlockLevels, showHearts } from "./Death.js";
       import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
       import { player, speedOfPlayer } from "./player.js";
 
       let playerScore = 0;
       let isGameStarted = false;
       let level = 0;
-      let isLevel2Unlocked = false;
+      let isLevel2Unlocked = true;
       let isLevel3Unlocked = false;
       let isLevel4Unlocked = false;
-      let isLevel5Unlocked = false;
+      let isLevel5Unlocked = true;
       let isTouchedByWallByTop = false;
       let isTouchedByWallByLeft = false;
       let isTouchedByWallByBottom = false; 
@@ -126,7 +126,7 @@
         //castControlManagement(isTouchedResponse[0], isTouchedResponse[1], isTouchedResponse[2], isTouchedResponse[3]);
         hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
         showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
-
+        showHearts(isGameStarted);
 
       });
     </script>

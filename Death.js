@@ -70,26 +70,28 @@ export function MortJoueur() {
     return [isGameStarted, isPlayerDead, level, playerScore];
     
   }
-  export function showHearts(lifeplayer) {
-    if(lifeplayer === 0){
+  export function showHearts(isGameStarted) {
+    if(lifeplayer === 0 || !isGameStarted){
       heart1.visible = false;
       heart2.visible = false;
       heart3.visible = false;
     }
-    if (lifeplayer === 1) {
+    else if (lifeplayer === 1) {
       heart1.visible = true;
       heart2.visible = false;
       heart3.visible = false;
     }
-    if (lifeplayer === 2) {
+    else if (lifeplayer === 2) {
       heart1.visible = true;
       heart2.visible = true;
       heart3.visible = false;
     }
-    if (lifeplayer === 3) {
+    else if (lifeplayer === 3) {
       heart1.visible = true;
       heart2.visible = true;
       heart3.visible = true;
+    } else {
+      console.error("Error with hearts")
     }
 }
 

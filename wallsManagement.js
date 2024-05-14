@@ -196,6 +196,7 @@ export function timerBeforeSpawningWall(isGameStarted, level) {
                 if(!changedAtStart) {
                     wallSprites.forEach(wall => {
                         underLayer.removeChild(wall.sprite);
+                       
                     });
                     wallSprites.splice(0 , wallSprites.length);
                     timeUntilWallSpawn = 200;
