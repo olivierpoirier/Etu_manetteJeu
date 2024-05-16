@@ -1,5 +1,5 @@
 import { gameWidth, gameHeight} from "./constants.js";
-import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
+import { middleLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
 
 const menuLeftCoordinateX = gameWidth*0.20;
 const menuRightCoordinateX = gameWidth*0.80;
@@ -103,13 +103,18 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
 
 }
 function showOrUnlock1level(lockedIconLevel, unlockedIconLevel, isTheLevelUnlocked) {
-    if(isTheLevelUnlocked) {
-        lockedIconLevel.visible = false;
-        unlockedIconLevel.visible = true;
-    } else {
-        lockedIconLevel.visible = true;
-        unlockedIconLevel.visible = false;
+    try {
+        if(isTheLevelUnlocked) {
+            lockedIconLevel.visible = false;
+            unlockedIconLevel.visible = true;
+        } else {
+            lockedIconLevel.visible = true;
+            unlockedIconLevel.visible = false;
+        }
+    } catch(e) {
+        console.error(e);
     }
+
 }
 export function showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked) {
     try {

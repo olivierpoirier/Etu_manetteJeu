@@ -1,0 +1,97 @@
+Documentation de : SquareUp
+Fait par :
+- Olivier Poirier
+- Juba Redjradj
+
+1) Guide pour commencer le jeu :
+- Installer l'extension Visual Studio Code Live Server
+- Entrer dans le dossier sender
+- Cliquer sur sender.html pour ouvrir le fichier 
+- Appuyer sur Go Live en bas à droite pour commencer le live server
+- Il faut redimensionner la fenêtre du browser pour un rectangle qui est de la largeur la plus
+petite possible et de la hauteur d'environ le 5e de l'écran.
+- Ensuite, cliquer avec le clic droit de la souris et caster sur le chromecast que vous voulez
+- Appuyez sur "Connect"
+- Pour jouer, déplacez la fenêtre du browser dans l'écran.
+
+2) Comment jouer : 
+
+2a) Comment se déplacer : 
+- Pour bouger, déplacez la fenêtre du browser dans l'écran. 
+Si la fenêtre est au milieu de la hauteur de l'écran à gauche, le joueur va se déplacer vers la gauche
+Si la fenêtre est au milieu de la hauteur de l'écran à droite, le joueur va se déplacer vers la droite
+Si la fenêtre est en haut de la hauteur de l'écran au milieu, le joueur va se déplacer vers le haut
+Si la fenêtre est en bas de la hauteur de l'écran au milieu, le joueur va se déplacer vers le bas
+Si la fenêtre est au milieu de l'écran, le joueur ne va pas se déplacer
+Et une combinaison de tout ça peut faire en sorte d'aller vers les diagonales
+
+2b) Comment commencer le jeu :
+Pour commencer une partie, il faut que le joueur se déplace sur une case où l'icône d'un
+level est débloqué (pas de cadenas). Ensuite, le niveau va commencer.
+
+2c) Comment jouer :
+Pour jouer, il faut déplacer le personnage et faire en sorte d'esquiver les blocs qui viennent de la gauche.
+Si un joueur perd tout ses coeurs ou se fait déplacer en dehors de l'écran par un bloc, il a perdu et réapparait au menu.
+Le but est de survivre le plus longtemps possible.
+Chaque fois qu'un bloc sort de l'écran, le score est augmenté.
+Quand un joueur arrive à un certain score dans un niveau, il va débloquer le prochain niveau. 
+La difficultée augmente progressivement dans chaque niveau.
+Le joueur gagne quand il arrive au niveau 5.
+
+3) Composants du jeu :
+Dossier Audio : Où tout les fichiers audios sont stockés.
+Dossier Images : Où toutes les images sont stockés.
+Dossier sender : Où le sender est stocké.
+
+sender.html : Code de la page pour le sender avec le bouton "Connect" pour connecter le chromecast.
+
+sender.js : Code qui récupère les données de la position du browser pour faire bouger le joueur et permet
+d'envoyer les données au recever.
+
+audio.js : Où toutes les constantes des fichiers audio sont stockées. 
+
+constants.js : Où toutes les constantes principales du jeu sont déclarées et que les images et textures du jeu
+sont chargées.
+
+controls.js : Où les fonctions pour bouger le personnage par clavier sont stockées.
+
+Death.js : Où toutes les fonctions qui ont rapport avec la mort d'un joueur, la perte de vie, 
+le game over et le restart sont créées.
+
+gameLayers.js : Où tout les différents "étages de textures" sont déclarées.
+une étage de texture est un groupe où on stocke les différentes entitées du jeu. 
+Ceci détermine si une entitée doit passer en dessous d'une autre ou par dessus une autre.
+
+gameObjectConst.js : Où tout les objets qui sont dessinés à l'écran sont créés (textes, images, coeurs, menu, etc).
+Il y a aussi les fonctions pour afficher et enlever des éléments à l'écran.
+
+jeuSepare.html : Où le code du jeu est appelé. C'est le coeur du jeu.
+
+pixi.min.js : Où toutes les fonctions de PIXIJS sont stockées. 
+On a la librairie PIXIJS stockée localement.
+
+startAndEndGame.js : Fonctions qui détermine si un niveau a été sélectionné et détermine quel niveau a été commencé.
+
+wall.js : Fichier de classe qui permet de créer tout les ennemis.
+Tout les ennemis (nommé murs) dépendent de cette classe.
+
+Attributs de Wall : 
+
+this.sprite : où est stocké le sprite PIXIJS. 
+
+this.isAlphaIncrementing : booléen qui détermine pour certains Wall si l'opacité du wall est entrain de diminuer
+ou augmenter. Elle est utilisée par les walls GHOST. Si le booléen est false, l'opacité du Wall diminue.
+Si elle est true, elle augmente.
+
+this.isZigZagingToBottomLeft : booléen qui détermine pour certains Wall s'il se dirige en diagonale vers en bas à gauche.
+Elle est utilisée par les walls ALIEN. 
+Si le booléen est false, le wall va vers en haut à gauche.
+Si elle est true, le wall va vers en bas à gauche.
+
+this.wallType : 
+Argument où est stocké le type du wall.
+Le type du wall permet de faire et sorte que les walls ayent différentes abilitées
+selon leur type.
+
+wallsManagement : Où sont stockées toutes les fonctions des Walls.
+

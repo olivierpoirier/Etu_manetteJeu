@@ -18,7 +18,6 @@
       import { movementControl }  from "./controls.js";
       import { verifyIfGameStart }   from "./startAndEndGame.js";
       import { hideOrShowObjectsWhenGameStart, showUnlockedLevels, titleChooseLevel, level1text } from "./gameObjectsConst.js";
-      //import { castControlManagement } from "./receiver/controllReceiver.js";
       import { MortJoueur, gameOver, unlockLevels, showHearts } from "./Death.js";
       import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
       import { player, speedOfPlayer } from "./player.js";
@@ -38,52 +37,44 @@
       let keys = {};
       let keysDiv;
       
-
-      //Chromecast receiver
       const context = cast.framework.CastReceiverContext.getInstance();
       const CHANNEL = 'urn:x-cast:gameChannel';
 
       context.addCustomMessageListener(CHANNEL, function(customEvent) {
-      //const pos = customEvent.data.msg.split(',');
-      //titleChooseLevel.text = customEvent.data.whereIsGoingPlayerY;
-      //level1text.text = customEvent.data.whereIsGoingPlayerX;
-      if(player.y >= 0){
-        if(!isTouchedByWallByTop) {
-          if(keys["38"] || customEvent.data.whereIsGoingPlayerY === "Up"){
-            player.y -= speedOfPlayer;
+        try {
+          if(player.y >= 0){
+            if(!isTouchedByWallByTop) {
+              if(keys["38"] || customEvent.data.whereIsGoingPlayerY === "Up"){
+                player.y -= speedOfPlayer;
+              }
+            }
           }
-        }
-      }
-      if(player.y < gameHeight - player.height){
-        if(!isTouchedByWallByBottom) {
-          if(keys["40"] || customEvent.data.whereIsGoingPlayerY === "Down"){
-            player.y += speedOfPlayer;
+          if(player.y < gameHeight - player.height){
+            if(!isTouchedByWallByBottom) {
+              if(keys["40"] || customEvent.data.whereIsGoingPlayerY === "Down"){
+                player.y += speedOfPlayer;
+              }
+            }
           }
-        }
-      }
-      if (player.x + speedOfPlayer > 0) {
-        if (!isTouchedByWallByLeft) {
-        
-          if(keys["37"] || customEvent.data.whereIsGoingPlayerX === "Left"){
-            player.x -= speedOfPlayer;
+          if (player.x + speedOfPlayer > 0) {
+            if (!isTouchedByWallByLeft) {
+            
+              if(keys["37"] || customEvent.data.whereIsGoingPlayerX === "Left"){
+                player.x -= speedOfPlayer;
+              }
+            
+            }
           }
-        
+          if(player.x < gameWidth - player.width){
+            if (!isTouchedByWallByRight) {
+              if(keys["39"] || customEvent.data.whereIsGoingPlayerX === "Right"){
+                player.x += speedOfPlayer;
+              }      
+            }
+          }
+        } catch(e) {
+          console.error(e);
         }
-      }
-      if(player.x < gameWidth - player.width){
-      if (!isTouchedByWallByRight) {
-        if(keys["39"] || customEvent.data.whereIsGoingPlayerX === "Right"){
-          
-          player.x += speedOfPlayer;
-        }
-        
-      }
-      }
-      if(keys['80']) {
-        console.log('allo')
-        let aud = new Audio("Audio/menu.mp3");
-        aud.play();
-      }
       
     });
 

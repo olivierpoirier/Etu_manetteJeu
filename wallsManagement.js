@@ -111,23 +111,7 @@ function spawnDanger(){
     
 }
 
-function spawnChangingNumber() {
-    const textStyle = new PIXI.TextStyle({
-        fontFamily: "Verdana",
-        fontSize: 36,
-        fill: "#ffffff"
-    });
 
-    const scoretext = new PIXI.Text({
-        text:`Score : 0`,
-        style: textStyle
-    
-    });
-
-    scoretext.position.x = gameWidth*0.70;
-    scoretext.position.y = gameHeight*0.05;
-    scoretext.visible = false;
-}
 
 function spawnWall(level) {
     try {

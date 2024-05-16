@@ -1,8 +1,5 @@
-
-import {hideOrShowObjectsWhenGameStart } from "./gameObjectsConst.js";
 import { player } from "./player.js";
-import { topLayer, middleLayer, underLayer } from "./gameLayers.js";
-import {heart1,heart2,heart3} from "./gameObjectsConst.js";
+import { heart1, heart2, heart3 } from "./gameObjectsConst.js";
 import { scoretext}  from "./gameObjectsConst.js";
 import { gameHeight, gameWidth } from "./constants.js";
 import { restartWalls } from "./wallsManagement.js";
@@ -13,50 +10,59 @@ const scoreToUnlockLevel3 = 5000;
 const scoreToUnlockLevel4 = 12000;
 const scoreToUnlockLevel5 = 14000;
 
-export let lifeplayer = 3;
+let lifeplayer = 3;
 
-export function JoueurHorsGame() {
+function JoueurHorsGame() {
+  try{
     const positionJoueur = player.getBounds();
     return (
       positionJoueur.x < 0 - player.width
     );
+  } catch(e) {
+    console.error(e);
+    return 0;
   }
 
+}
+
 export function MortJoueur() {
+  try {
     if (JoueurHorsGame()) {
       console.log("Joueur mort");
       lifeplayer -= 1;
       console.log("Vie du joueurs : "+lifeplayer)
-      showHearts(lifeplayer);
     }
-  
+  } catch(e) {
+    console.error(e);
   }
+}
 
-  export function unlockLevels(playerScore, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked) {
-    try {
-      
-      if(playerScore >= scoreToUnlockLevel2 && level === 1) {
-        isLevel2Unlocked = true;
-      }
-      if(playerScore >= scoreToUnlockLevel3 && level === 2) {
-        isLevel3Unlocked = true;
-      }
-      if(playerScore >= scoreToUnlockLevel4 && level === 3) {
-        isLevel4Unlocked = true;
-      }
-      if(playerScore >= scoreToUnlockLevel5 && level === 4) {
-        isLevel5Unlocked = true;
-      }
-      
-    } catch(e) {
-      console.error(e);
+export function unlockLevels(playerScore, level, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked) {
+  try {
+    
+    if(playerScore >= scoreToUnlockLevel2 && level === 1) {
+      isLevel2Unlocked = true;
     }
-    return[isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked];
-
+    if(playerScore >= scoreToUnlockLevel3 && level === 2) {
+      isLevel3Unlocked = true;
+    }
+    if(playerScore >= scoreToUnlockLevel4 && level === 3) {
+      isLevel4Unlocked = true;
+    }
+    if(playerScore >= scoreToUnlockLevel5 && level === 4) {
+      isLevel5Unlocked = true;
+    }
+    
+  } catch(e) {
+    console.error(e);
   }
+  return[isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked];
 
-  export function gameOver(isGameStarted, isPlayerDead, level, playerScore) {
+}
 
+export function gameOver(isGameStarted, isPlayerDead, level, playerScore) {
+
+  try {
     if ((lifeplayer <= 0 || JoueurHorsGame()) && isGameStarted ) {
       lifeplayer = 3
       playerScore = 0;
@@ -66,11 +72,15 @@ export function MortJoueur() {
       player.y = (gameHeight-player.height)/2;
       restartWalls();
     } 
-
-    return [isGameStarted, isPlayerDead, level, playerScore];
-    
+  } catch(e) {
+    console.error(e);
   }
-  export function showHearts(isGameStarted) {
+  return [isGameStarted, isPlayerDead, level, playerScore];
+  
+}
+
+export function showHearts(isGameStarted) {
+  try {
     if(lifeplayer === 0 || !isGameStarted){
       heart1.visible = false;
       heart2.visible = false;
@@ -93,11 +103,15 @@ export function MortJoueur() {
     } else {
       console.error("Error with hearts")
     }
+  } catch(e) {
+    console.error(e);
+  }
+
 }
 
- export function perdPV(mortoupas){
+export function perdPV(mortoupas){
+  try {
     if(mortoupas){
-      //topLayer.removeChild(player);
       console.log("Joueur perd 1 pv");
       lifeplayer = lifeplayer - 1;
       console.log(lifeplayer);
@@ -108,11 +122,20 @@ export function MortJoueur() {
       }
       showHearts(lifeplayer);
     }
+  } catch(e) {
+    console.error(e);
   }
-  export function restartGame() {
-    //topLayer.addChild(player);
+
+}
+
+export function restartGame() {
+  try {
     player.x = gameWidth*0.10;
     player.y = (gameHeight-player.height)/2;
     playerScore = 0;
     scoretext.text = `Score : ${playerScore}`;
+  } catch(e) {
+    console.error(e);
   }
+
+}
