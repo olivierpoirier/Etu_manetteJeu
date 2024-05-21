@@ -5,6 +5,9 @@ import { Wall } from "./wall.js";
 import { perdPV } from "./Death.js";
 
 let wallSprites = [];
+
+let lasers = [];
+
 let speedOfWalls = 5;
 let isWallSpawning = false;
 let timeUntilWallSpawn = 200;
@@ -55,6 +58,42 @@ function spawnGhostWall(wallSprite) {
     return wallSprite;
 } 
 
+function shootLaser(x, y) {
+    let LazerBleu = PIXI.Texture.from('Images/JubaLazerBlue.png');
+    let LazerRed = PIXI.Texture.from('Images/JubaLazerRed.png');
+    let LazerGreen = PIXI.Texture.from('Images/JubaLazer.png');
+    
+    const laserTextures = [LazerBleu, LazerRed, LazerGreen];
+    const AleatoireLazer = laserTextures[Math.floor(Math.random() * laserTextures.length)];
+    
+    let laser = new PIXI.Sprite(AleatoireLazer);
+    laser.width = 30;
+    laser.height = 30;
+    laser.x = x;
+    laser.y = y;
+    lasers.push(laser);
+    underLayer.addChild(laser);
+}
+
+function updateLasers() {
+    lasers.forEach((laser, index) => {
+        laser.x -= 10; 
+
+        if (laser.x < 0) {
+            underLayer.removeChild(laser);
+            lasers.splice(index, 1);
+        }
+
+        if (player.x < laser.x + laser.width &&
+            player.x + player.width > laser.x &&
+            player.y < laser.y + laser.height &&
+            player.y + player.height > laser.y) {
+            perdPV(true);
+            underLayer.removeChild(laser);
+            lasers.splice(index, 1);
+        }
+    });
+}
 function spawnAlienWall() {
     const minImage = 1
     const maxImage = 8
@@ -312,6 +351,9 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
                 if(wall.sprite.y + wall.sprite.height >= gameHeight){
                     wall.isZigZagingToBottomLeft = false;
                 }
+                if (Math.random() < 0.01) { 
+                    shootLaser(wall.sprite.x, wall.sprite.y + wall.sprite.height / 2);
+                }
             }
         
             
@@ -321,6 +363,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
         
             playerScore = removeWallFromGame(isGameStarted, wall, playerScore, level);
         });
+        updateLasers();
         
     } catch(e) {
         console.error(e);

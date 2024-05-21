@@ -201,7 +201,7 @@ level4Icon.y = fourthLevelSquareTopCoordinateY + levelMinHeight/2;
 level4Icon.width = levelMaxWidth - levelMinWidth;
 level4Icon.height = levelMaxHeight - levelMinHeight;
 
-const level5Icon = PIXI.Sprite.from('Images/level1Icon.png');
+const level5Icon = PIXI.Sprite.from('Images/IconeMonsterFixe.png');
 level5Icon.x = fifthLevelSquareLeftCoordinateX + levelMinWidth/2;
 level5Icon.y = fifthLevelSquareTopCoordinateY + levelMinHeight/2;
 level5Icon.width = levelMaxWidth - levelMinWidth;
@@ -249,7 +249,7 @@ backgroundLevel4.width = gameWidth;
 backgroundLevel4.height = gameHeight;
 backgroundLevel4.visible = false;
 
-export const backgroundLevel5 = PIXI.Sprite.from('Images/level1Icon.png');
+export const backgroundLevel5 = PIXI.Sprite.from('Images/MonsterMondeFix.png');
 backgroundLevel5.width = gameWidth;
 backgroundLevel5.height = gameHeight;
 backgroundLevel5.visible = false;

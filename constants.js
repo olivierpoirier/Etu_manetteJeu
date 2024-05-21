@@ -23,6 +23,11 @@ await PIXI.Assets.load('Images/Coeur.png');
 await PIXI.Assets.load('Images/metoirite.png');
 await PIXI.Assets.load('Images/Flamme.png');
 await PIXI.Assets.load('Images/Volcan.png');
+await PIXI.Assets.load('Images/IconeMonsterFixe.png');
+await PIXI.Assets.load('Images/MonsterMondeFix.png');
+await PIXI.Assets.load('Images/JubaLazerRed.png');
+await PIXI.Assets.load('Images/JubaLazerBlue.png');
+await PIXI.Assets.load('Images/JubaLazer.png');
 
 export const app = new PIXI.Application();
 export const gameWidth = window.innerWidth;
