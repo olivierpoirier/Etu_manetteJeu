@@ -6,9 +6,9 @@ import { restartWalls } from "./wallsManagement.js";
 
 let playerScore = 0;
 const scoreToUnlockLevel2 = 100;
-const scoreToUnlockLevel3 = 5000;
-const scoreToUnlockLevel4 = 12000;
-const scoreToUnlockLevel5 = 14000;
+const scoreToUnlockLevel3 = 1000;
+const scoreToUnlockLevel4 = 3000;
+const scoreToUnlockLevel5 = 4000;
 
 let lifeplayer = 3;
 
