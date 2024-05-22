@@ -7,12 +7,10 @@ import { firstLevelSquareLeftCoordinateX, firstLevelSquareTopCoordinateY,
     backgroundLevel4,
     backgroundLevel5,
     backgroundLevel2, textStyle}  from "./gameObjectsConst.js";
-
-import { player } from "./player.js";
-
+import { player, ChangementSkin } from "./player.js";
 import { audioLevel1, audioLevel2, audioLevel3, audioLevel4, audioLevel5 } from "./audio.js";
 
-let newLevel = 0;
+export let newLevel = 0;
 let isLevelChoosen = false;
 
 
@@ -34,6 +32,7 @@ function verifyIfPlayerEnterALevelSpace(isGameStarted, XLevelCoordinate, YLevelC
                 textStyle.fill = textColor;
                 newLevel = levelNumber;
                 console.log("Level started : " + newLevel);
+                ChangementSkin();
                 if(audio != null) {
                     audio.play()
                 }

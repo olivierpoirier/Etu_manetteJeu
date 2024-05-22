@@ -1,5 +1,4 @@
 
-await PIXI.Assets.load('Images/square.png');
 await PIXI.Assets.load('Images/Grotte.png');
 await PIXI.Assets.load('Images/maquette.png');
 await PIXI.Assets.load('Images/LargeSpace.png');
@@ -28,6 +27,13 @@ await PIXI.Assets.load('Images/MonsterMondeFix.png');
 await PIXI.Assets.load('Images/JubaLazerRed.png');
 await PIXI.Assets.load('Images/JubaLazerBlue.png');
 await PIXI.Assets.load('Images/JubaLazer.png');
+
+
+
+// Skin personnage 600 X 600
+await PIXI.Assets.load('Images/mineur-1.png');
+await PIXI.Assets.load('Images/Helico.png');
+await PIXI.Assets.load('Images/square.png');
 
 export const app = new PIXI.Application();
 export const gameWidth = window.innerWidth;
