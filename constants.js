@@ -30,10 +30,15 @@ await PIXI.Assets.load('Images/JubaLazer.png');
 
 
 
+
 // Skin personnage 600 X 600
-await PIXI.Assets.load('Images/mineur-1.png');
+await PIXI.Assets.load('Images/mineur-3.png');
 await PIXI.Assets.load('Images/Helico.png');
 await PIXI.Assets.load('Images/square.png');
+await PIXI.Assets.load('Images/helicopter.png');
+await PIXI.Assets.load('Images/drill.png');
+await PIXI.Assets.load('Images/starship.png');
+await PIXI.Assets.load('Images/super juba.png');
 
 export const app = new PIXI.Application();
 export const gameWidth = window.innerWidth;

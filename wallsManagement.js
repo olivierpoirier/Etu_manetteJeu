@@ -8,7 +8,7 @@ let wallSprites = [];
 
 let lasers = [];
 
-let speedOfWalls = 5;
+let speedOfWalls = gameWidth*0.005;
 let isWallSpawning = false;
 let timeUntilWallSpawn = 200;
 let comptorHowManyWallsDied = 0;
@@ -23,7 +23,7 @@ export function increaseDifficultyOfWalls(isGameStarted) {
         if(isGameStarted) {
             if(comptorHowManyWallsDied >= 100) {
                 timeUntilWallSpawn -= 15;
-                speedOfWalls += 1;
+                speedOfWalls += gameWidth*0.001;
                 comptorHowManyWallsDied = 0;
             }
         }
@@ -67,31 +67,34 @@ function shootLaser(x, y) {
     const AleatoireLazer = laserTextures[Math.floor(Math.random() * laserTextures.length)];
     
     let laser = new PIXI.Sprite(AleatoireLazer);
-    laser.width = 30;
-    laser.height = 30;
+    laser.width = gameWidth*0.02;
+    laser.height = gameWidth*0.02;
     laser.x = x;
     laser.y = y;
     lasers.push(laser);
     underLayer.addChild(laser);
 }
 
-function updateLasers() {
+function updateLasers(isGameStarted) {
     lasers.forEach((laser, index) => {
-        laser.x -= 10; 
+        laser.x -= gameWidth*0.007; 
 
         if (laser.x < 0) {
             underLayer.removeChild(laser);
             lasers.splice(index, 1);
         }
 
-        if (player.x < laser.x + laser.width &&
-            player.x + player.width > laser.x &&
-            player.y < laser.y + laser.height &&
-            player.y + player.height > laser.y) {
-            perdPV(true);
-            underLayer.removeChild(laser);
-            lasers.splice(index, 1);
+        if(isGameStarted) {
+            if (player.x < laser.x + laser.width &&
+                player.x + player.width > laser.x &&
+                player.y < laser.y + laser.height &&
+                player.y + player.height > laser.y) {
+                perdPV(true);
+                underLayer.removeChild(laser);
+                lasers.splice(index, 1);
+            }
         }
+
     });
 }
 function spawnAlienWall() {
@@ -186,8 +189,8 @@ function spawnWall(level) {
         }
     
         
-        wallSprite.sprite.width = 50;
-        wallSprite.sprite.height = 50;
+        wallSprite.sprite.width = gameWidth*0.03;
+        wallSprite.sprite.height = gameWidth*0.03;
         wallSprite.sprite.x = gameWidth;
         wallSprite.sprite.y = Math.floor(Math.random() * (gameHeight-wallSprite.sprite.height));
     
@@ -209,7 +212,7 @@ export function timerBeforeSpawningWall(isGameStarted, level) {
         
         if (!isWallSpawning) {
             if(!isGameStarted) {
-                speedOfWalls = 5;
+                speedOfWalls = gameWidth*0.005;
                 comptorHowManyWallsDied = 0;
                 timeUntilWallSpawn = Math.floor((Math.random()* 2000) + 600)
                 setTimeout(spawnWall, timeUntilWallSpawn, level);
@@ -363,7 +366,7 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
         
             playerScore = removeWallFromGame(isGameStarted, wall, playerScore, level);
         });
-        updateLasers();
+        updateLasers(isGameStarted);
         
     } catch(e) {
         console.error(e);

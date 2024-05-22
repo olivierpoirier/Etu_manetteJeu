@@ -257,7 +257,7 @@ backgroundLevel5.visible = false;
 //Constants of texts Objects 
 export const textStyle = new PIXI.TextStyle({
     fontFamily: "Verdana",
-    fontSize: 36,
+    fontSize: gameWidth*0.02,
     fill: "#ffffff"
 });
 
@@ -327,7 +327,7 @@ level5text.position.y = fifthLevelSquareTopCoordinateY + fifthLevelSquare.height
 
 
 //Coeurs
-const widthAndHeightOfHearts = 400;
+const widthAndHeightOfHearts = gameWidth*0.3;
 export const heart1 = PIXI.Sprite.from("Images/Coeur.png");
 export const heart2 = PIXI.Sprite.from("Images/Coeur.png");
 export const heart3 = PIXI.Sprite.from("Images/Coeur.png");
@@ -337,9 +337,9 @@ heart2.width=widthAndHeightOfHearts;
 heart2.height=widthAndHeightOfHearts;
 heart3.width=widthAndHeightOfHearts;
 heart3.height=widthAndHeightOfHearts;
-heart1.position.set(-130, -130);  
-heart2.position.set(-60, -130);  
-heart3.position.set(10, -130); 
+heart1.position.set(-gameWidth*0.1, -gameHeight*0.15);  
+heart2.position.set(-gameWidth*0.05, -gameHeight*0.15);  
+heart3.position.set(gameWidth*0, -gameHeight*0.15); 
 
 underLayer.addChild(backgroundLevel2);
 ultraTopLayer.addChild(backgroundLevel3);
