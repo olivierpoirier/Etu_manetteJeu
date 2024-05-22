@@ -2,7 +2,7 @@ import { gameHeight, gameWidth } from "./constants.js";
 import { ultraTopLayer } from "./gameLayers.js";
 import { newLevel } from "./startAndEndGame.js";
 
-export let player;  // Changed from const to let to allow re-assignment
+export let player;  
 const playerWidth = 15;
 const playerHeight = 15;
 export const speedOfPlayer = 3;
@@ -36,5 +36,4 @@ export function ChangementSkin() {
     ultraTopLayer.addChild(player);
 }
 
-// Appel initial pour définir le skin du joueur au démarrage
 ChangementSkin();
