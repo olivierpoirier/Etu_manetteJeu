@@ -9,8 +9,10 @@ const scoreToUnlockLevel2 = 100;
 const scoreToUnlockLevel3 = 1000;
 const scoreToUnlockLevel4 = 3000;
 const scoreToUnlockLevel5 = 4000;
-
+const timeOfInvulnerability = 250;
 let lifeplayer = 3;
+
+let comptorOfInvTime = 0;
 
 function JoueurHorsGame() {
   try{
@@ -109,9 +111,9 @@ export function showHearts(isGameStarted) {
 
 }
 
-export function perdPV(mortoupas){
+export function perdPV(isPlayerImmortal){
   try {
-    if(mortoupas){
+    if(!isPlayerImmortal){
       console.log("Joueur perd 1 pv");
       lifeplayer = lifeplayer - 1;
       console.log(lifeplayer);
@@ -137,5 +139,25 @@ export function restartGame() {
   } catch(e) {
     console.error(e);
   }
+
+}
+
+
+export function removeImmortalityAfterDelay(isPlayerImmortal) {
+  try {
+    if(isPlayerImmortal) {
+      comptorOfInvTime += 1;
+      if(comptorOfInvTime >= timeOfInvulnerability){
+        comptorOfInvTime = 0;
+        isPlayerImmortal =false;
+      }
+    }
+    console.log(isPlayerImmortal);
+
+
+  } catch(e) {
+    console.error(e);
+  }
+  return isPlayerImmortal;
 
 }

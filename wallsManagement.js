@@ -75,27 +75,34 @@ function shootLaser(x, y) {
     underLayer.addChild(laser);
 }
 
-function updateLasers(isGameStarted) {
-    lasers.forEach((laser, index) => {
-        laser.x -= gameWidth*0.007; 
-
-        if (laser.x < 0) {
-            underLayer.removeChild(laser);
-            lasers.splice(index, 1);
-        }
-
-        if(isGameStarted) {
-            if (player.x < laser.x + laser.width &&
-                player.x + player.width > laser.x &&
-                player.y < laser.y + laser.height &&
-                player.y + player.height > laser.y) {
-                perdPV(true);
+function updateLasers(isGameStarted, isPlayerImmortal) {
+    try {
+        lasers.forEach((laser, index) => {
+            laser.x -= gameWidth*0.007; 
+    
+            if (laser.x < 0) {
                 underLayer.removeChild(laser);
                 lasers.splice(index, 1);
             }
-        }
+    
+            if(isGameStarted) {
+                if (player.x < laser.x + laser.width &&
+                    player.x + player.width > laser.x &&
+                    player.y < laser.y + laser.height &&
+                    player.y + player.height > laser.y) {
+                    perdPV(isPlayerImmortal);
+                    isPlayerImmortal = true;
+                    underLayer.removeChild(laser);
+                    lasers.splice(index, 1);
+                }
+            }
+    
+        });
+    } catch(e) {
+        console.error(e);
+    }
 
-    });
+    return isPlayerImmortal;
 }
 function spawnAlienWall() {
     const minImage = 1
@@ -274,52 +281,59 @@ export function removeWallFromGame(isGameStarted, wall, playerScore, level) {
     return playerScore;
 }
 
-export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level) {
+export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level, isPlayerImmortal) {
 
     try {
         wallSprites.forEach(wall => {
 
             if(isGameStarted) {
-                if (player.y + player.height > wall.sprite.y - speedOfPlayer && player.y <= wall.sprite.y  && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
-                    isTouchedByWallByBottom = true;
-                    if(player.y - speedOfWalls > 0){
-                        player.y -= speedOfWalls;
+                if(!isPlayerImmortal){
+                    if (player.y + player.height > wall.sprite.y - speedOfPlayer && player.y <= wall.sprite.y  && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
+                        isTouchedByWallByBottom = true;
+                        if(player.y - speedOfWalls > 0){
+                            player.y -= speedOfWalls;
+                            if(wall.wallType === "DANGER") {
+                                perdPV(isPlayerImmortal);
+                                isPlayerImmortal = true;
+                            }
+                        }
+                    }
+            
+                    if (player.y < wall.sprite.y + wall.sprite.height + speedOfPlayer && player.y >= wall.sprite.y + wall.sprite.height && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
+                        isTouchedByWallByTop = true;
+                        if(player.y + player.height + speedOfWalls < gameHeight){
+                            player.y += speedOfWalls;
+                            if(wall.wallType === "DANGER") {                    
+                                perdPV(isPlayerImmortal);
+                                isPlayerImmortal = true;
+                            }
+                        }
+                    }
+            
+            
+                    if (player.x + player.width > wall.sprite.x - speedOfPlayer && player.x <= wall.sprite.x  && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
+                        isTouchedByWallByRight = true;
+                        player.x -= speedOfWalls;
                         if(wall.wallType === "DANGER") {
-                            perdPV(true)
+                            perdPV(isPlayerImmortal);
+                            isPlayerImmortal = true;
+                        }
+                    }
+                    
+                    if (player.x < wall.sprite.x + wall.sprite.width + speedOfPlayer && player.x >= wall.sprite.x + wall.sprite.width && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
+                        isTouchedByWallByLeft = true;
+                        if(player.x + player.width + speedOfWalls < gameWidth){
+                            player.x += speedOfWalls;
+                            if(wall.wallType === "DANGER") {           
+                                perdPV(isPlayerImmortal);
+                                isPlayerImmortal = true;
+                            }
                         }
                     }
                 }
-        
-                if (player.y < wall.sprite.y + wall.sprite.height + speedOfPlayer && player.y >= wall.sprite.y + wall.sprite.height && player.x >= wall.sprite.x && player.x <= wall.sprite.x + wall.sprite.width) {
-                    isTouchedByWallByTop = true;
-                    if(player.y + player.height + speedOfWalls < gameHeight){
-                        player.y += speedOfWalls;
-                        if(wall.wallType === "DANGER") {
-                            perdPV(true)
-                        }
-                    }
-                }
-        
-        
-                if (player.x + player.width > wall.sprite.x - speedOfPlayer && player.x <= wall.sprite.x  && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
-                    isTouchedByWallByRight = true;
-                    player.x -= speedOfWalls;
-                    if(wall.wallType === "DANGER") {
-                        perdPV(true)
-                    }
-                }
-                
-                if (player.x < wall.sprite.x + wall.sprite.width + speedOfPlayer && player.x >= wall.sprite.x + wall.sprite.width && player.y >= wall.sprite.y && player.y <= wall.sprite.y + wall.sprite.height) {
-                    isTouchedByWallByLeft = true;
-                    if(player.x + player.width + speedOfWalls < gameWidth){
-                        player.x += speedOfWalls;
-                        if(wall.wallType === "DANGER") {
-                            perdPV(true)
-                        }
-                    }
-                }
+            
             }
-        
+                
         
             
         
@@ -366,12 +380,18 @@ export function wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedBy
         
             playerScore = removeWallFromGame(isGameStarted, wall, playerScore, level);
         });
-        updateLasers(isGameStarted);
+        isPlayerImmortal = updateLasers(isGameStarted, isPlayerImmortal);
+
+
+
+        
+
+
         
     } catch(e) {
         console.error(e);
     }
     
-    return [isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore];
+    return [isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, isPlayerImmortal];
 
 }

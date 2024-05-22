@@ -102,6 +102,14 @@ export function hideOrShowObjectsWhenGameStart(isGameStarted, playerScore) {
     }
 
 }
+
+export function showInvulnerabilityText(isPlayerImmortal){
+    if(isPlayerImmortal) {
+        invtext.visible = true;
+    } else {
+        invtext.visible = false;
+    }
+}
 function showOrUnlock1level(lockedIconLevel, unlockedIconLevel, isTheLevelUnlocked) {
     try {
         if(isTheLevelUnlocked) {
@@ -325,6 +333,15 @@ const level5text = new PIXI.Text({
 level5text.position.x = fifthLevelSquareLeftCoordinateX + fifthLevelSquare.width/2 - level5text.width/2;
 level5text.position.y = fifthLevelSquareTopCoordinateY + fifthLevelSquare.height + level5text.height/4;
 
+const invtext = new PIXI.Text({
+    text:"YOU ARE INVULNERABLE FOR NOW",
+    style: textStyle
+
+});
+
+invtext.position.x = gameWidth*0.50 - invtext.width/2;
+invtext.position.y = gameHeight*0.10 - invtext.height/2;
+
 
 //Coeurs
 const widthAndHeightOfHearts = gameWidth*0.3;
@@ -347,6 +364,7 @@ underLayer.addChild(backgroundLevel4);
 underLayer.addChild(backgroundLevel5);
 middleLayer.addChild(titleChooseLevel);
 ultraMAXIMUMTopLayer.addChild(scoretext);
+ultraMAXIMUMTopLayer.addChild(invtext);
 middleLayer.addChild(menuBackground);
 middleLayer.addChild(menuLineLeft);
 middleLayer.addChild(menuLineRight);

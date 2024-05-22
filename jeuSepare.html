@@ -17,8 +17,8 @@
       import { wallsManagement, timerBeforeSpawningWall, increaseDifficultyOfWalls } from "./wallsManagement.js";
       import { movementControl }  from "./controls.js";
       import { verifyIfGameStart }   from "./startAndEndGame.js";
-      import { hideOrShowObjectsWhenGameStart, showUnlockedLevels, titleChooseLevel, level1text } from "./gameObjectsConst.js";
-      import { MortJoueur, gameOver, unlockLevels, showHearts } from "./Death.js";
+      import { hideOrShowObjectsWhenGameStart, showUnlockedLevels, titleChooseLevel, level1text, showInvulnerabilityText } from "./gameObjectsConst.js";
+      import { MortJoueur, gameOver, unlockLevels, showHearts, removeImmortalityAfterDelay } from "./Death.js";
       import { middleLayer, topLayer, underLayer, ultraTopLayer, ultraMAXIMUMTopLayer } from "./gameLayers.js";
       import { player, speedOfPlayer } from "./player.js";
 
@@ -35,6 +35,7 @@
       let isTouchedByWallByBottom = false; 
       let isTouchedByWallByRight = false;
       let isPlayerDead = false;
+      let isPlayerImmortal = false;
       let keys = {};
       let keysDiv;
       
@@ -100,13 +101,13 @@
         isTouchedByWallByRight = false;
         let isTouchedResponse = []
         let gameStartedAndLevelResponse = []
-        isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level);
+        isTouchedResponse = wallsManagement(isGameStarted, isTouchedByWallByTop, isTouchedByWallByLeft, isTouchedByWallByBottom, isTouchedByWallByRight, playerScore, level, isPlayerImmortal);
         isTouchedByWallByTop = isTouchedResponse[0];
         isTouchedByWallByLeft = isTouchedResponse[1];
         isTouchedByWallByBottom = isTouchedResponse[2];
         isTouchedByWallByRight = isTouchedResponse[3];
-        
         playerScore = isTouchedResponse[4];
+        isPlayerImmortal = isTouchedResponse[5];
 
         [isGameStarted, level] = verifyIfGameStart(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         timerBeforeSpawningWall(isGameStarted, level);
@@ -119,7 +120,8 @@
         hideOrShowObjectsWhenGameStart(isGameStarted, playerScore);
         showUnlockedLevels(isGameStarted, isLevel2Unlocked, isLevel3Unlocked, isLevel4Unlocked, isLevel5Unlocked);
         showHearts(isGameStarted);
-
+        isPlayerImmortal = removeImmortalityAfterDelay(isPlayerImmortal);
+        showInvulnerabilityText(isPlayerImmortal);
       });
     </script>
     <script src="./wallsManagement.js" type="module/javascript"></script>
