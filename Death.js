@@ -142,7 +142,6 @@ export function restartGame() {
 
 }
 
-
 export function removeImmortalityAfterDelay(isPlayerImmortal) {
   try {
     if(isPlayerImmortal) {
